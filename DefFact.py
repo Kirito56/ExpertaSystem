@@ -89,10 +89,12 @@ class DefFact(KnowledgeEngine):
     @Rule(Kebab(Type='Pork', Time=15))
     def ChickenLongFried(self):
         """
-        Правило Курятина і Кенгурятина довго жариться
+        Після пошуку Свинини перевіряємо час прожарювання та вказуємо на дію
 
         :return: Rotate
         :rtype: str
         """
-        self.declare(self.modify(self.facts[1], Action='Rotate'))
-        return print(self.facts)
+        try:
+            self.declare(self.modify(self.facts[1], Action='Rotate'))
+        except KeyError:
+            return print(self.facts)
