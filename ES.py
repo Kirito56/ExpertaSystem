@@ -1,5 +1,6 @@
-from experta import (KnowledgeEngine, Field, Fact, Rule, DefFacts,
-                     L, P, AS, OR, AND, EXISTS, NOT, FORALL)
+from experta import (Field, Fact)
+
+
 class Kebab(Fact):
     """
     * Type - Тип м'яса

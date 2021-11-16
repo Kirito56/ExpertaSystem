@@ -1,5 +1,9 @@
 from experta import (KnowledgeEngine, Field, Fact, Rule, DefFacts,
                      L, P, AS, OR, AND, EXISTS, NOT, FORALL)
+from experta.engine import KnowledgeEngine
+from experta.rule import Rule
+from experta.deffacts import DefFacts
+from experta.conditionalelement import AND
 
 from ES import Kebab
 
