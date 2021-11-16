@@ -11,5 +11,3 @@ dependencies:
   -mistune=0.8.4
   -terminado=0.9.4
   -webencodings=0.5.1
-  -pip:
-    - git+https://github.com/blaze/dask.git#egg=dask[complete]
