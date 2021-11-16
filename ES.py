@@ -1,4 +1,5 @@
-from experta import (Field, Fact)
+
+from experta.fact import Fact, Field
 
 
 class Kebab(Fact):

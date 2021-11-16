@@ -1,6 +1,5 @@
-from experta import (KnowledgeEngine, Field, Fact, Rule, DefFacts,
-                     L, P, AS, OR, AND, EXISTS, NOT, FORALL)
 from ES import Kebab
+from experta.engine import KnowledgeEngine
 
 
 class Asserts(KnowledgeEngine):
