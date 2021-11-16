@@ -1,0 +1,15 @@
+name: ExpertaSystem
+
+dependencies:
+  -python=3.8.10
+  -experta=1.9.4
+  -frozendict=1.2
+  -certifi=2021.10.8
+  -entrypoints=0.3
+  -pywin32=228
+  -schema=0.6.7
+  -mistune=0.8.4
+  -terminado=0.9.4
+  -webencodings=0.5.1
+  -pip:
+    - git+https://github.com/blaze/dask.git#egg=dask[complete]
