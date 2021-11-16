@@ -1,7 +1,7 @@
 name: ExpertaSystem
 
 dependencies:
-  -python=3.8.10
-  -experta=1.9.4
-  -frozendict=1.2
-  -schema=0.6.7
+  - python=3.8.10
+  - experta
+  - frozendict
+  - schema
