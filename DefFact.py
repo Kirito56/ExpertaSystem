@@ -86,8 +86,7 @@ class DefFact(KnowledgeEngine):
         """
         return print('Found')
 
-    @Rule(Kebab(Type='Chicken', Time=15),
-          AND(Kebab(Type='Kangaroo', Time=15)))
+    @Rule(Kebab(Type='Pork', Time=15))
     def ChickenLongFried(self):
         """
         Правило Курятина і Кенгурятина довго жариться
@@ -95,4 +94,4 @@ class DefFact(KnowledgeEngine):
         :return: Rotate
         :rtype: str
         """
-        return print('Rotate!')
+        return self.declare(self.modify(self.facts[1], Action='Rotate'))
