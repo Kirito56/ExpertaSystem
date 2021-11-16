@@ -48,12 +48,6 @@ def start(engine: int,
             e.facts.clear()
         elif rules:
             e.run()
-            if e.ChickenLongFried() == 'Rotate':
-                num = int(input('Fact Number: '))
-                Action = str(input(f'Action:\n1.\tWait\t2.\tRotate\t3.\tTake\nChoice:\t{str}\t-\t'))
-                args = dict(Action=Action)
-                e.declare(e.modify(e.facts[num], Action=args.get('Action')))
-                print(e.facts)
     elif engine == 2:
         e = Asserts()
         e.reset()

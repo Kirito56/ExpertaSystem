@@ -94,4 +94,5 @@ class DefFact(KnowledgeEngine):
         :return: Rotate
         :rtype: str
         """
-        return self.declare(self.modify(self.facts[1], Action='Rotate'))
+        self.declare(self.modify(self.facts[1], Action='Rotate'))
+        return print(self.facts)
