@@ -95,4 +95,4 @@ class DefFact(KnowledgeEngine):
         :return: Rotate
         :rtype: str
         """
-        return print('Rotate!')
+        return 'Rotate'
