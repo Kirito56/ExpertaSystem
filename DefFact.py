@@ -76,23 +76,3 @@ class DefFact(KnowledgeEngine):
                     DoneAToTheMajority=False,
                     NumberOfPeople=2)
 
-    @Rule(Kebab(Type='Pork'))
-    def FindPorkMeat(self):
-        """
-        Правило знайти факт де тип м'яса - Свинина
-
-        :return: Found
-        :rtype: str
-        """
-        return print('Found')
-
-    @Rule(Kebab(Type='Chicken', Time=15),
-          AND(Kebab(Type='Kangaroo', Time=15)))
-    def ChickenLongFried(self):
-        """
-        Правило Курятина і Кенгурятина довго жариться
-
-        :return: Rotate
-        :rtype: str
-        """
-        return print('Rotate!')
