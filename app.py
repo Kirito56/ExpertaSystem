@@ -57,12 +57,13 @@ def start(engine: int,
             e.retract(numoffact)
 
 
-engine = int(input(f'Engine:\n1.\tDefFacts\n2.\tAsserts\t(50%\tcomplete)\nChoice:\t{int}\t-\t'))
-delete = bool(input(f'Delete\tFact:\nEmpty.\tNo\n1.\tYes\nChoice:\t{int}\t-\t'))
-modify = bool(input(f'Modify:\nEmpty.\tNo\n1.\tYes\nChoice:\t{int}\t-\t'))
-clear = bool(input(f'Clear:\nEmpty.\tNo\n1.\tYes\nChoice:\t{int}\t-\t'))
-rules = bool(input(f'Rules:\nEmpty.\tNo\n1.\tYes\nChoice:\t{int}\t-\t'))
-print(f'Engine:\t{engine}\nDelete:\t{delete}\nModify:\t{modify}\nClear:\t{clear}\nRules:\t{rules}')
-if delete or modify or clear or rules:
-    numoffact = True
-    start(engine, modify=modify, numoffact=numoffact, delfacts=delete, clear=clear, rules=rules)
+if __name__ == "__main__":
+    engine = int(input(f'Engine:\n1.\tDefFacts\n2.\tAsserts\t(50%\tcomplete)\nChoice:\t{int}\t-\t'))
+    delete = bool(input(f'Delete\tFact:\nEmpty.\tNo\n1.\tYes\nChoice:\t{int}\t-\t'))
+    modify = bool(input(f'Modify:\nEmpty.\tNo\n1.\tYes\nChoice:\t{int}\t-\t'))
+    clear = bool(input(f'Clear:\nEmpty.\tNo\n1.\tYes\nChoice:\t{int}\t-\t'))
+    rules = bool(input(f'Rules:\nEmpty.\tNo\n1.\tYes\nChoice:\t{int}\t-\t'))
+    print(f'Engine:\t{engine}\nDelete:\t{delete}\nModify:\t{modify}\nClear:\t{clear}\nRules:\t{rules}')
+    if delete or modify or clear or rules:
+        numoffact = True
+        start(engine, modify=modify, numoffact=numoffact, delfacts=delete, clear=clear, rules=rules)

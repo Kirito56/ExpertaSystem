@@ -1,7 +1,8 @@
 from experta.engine import KnowledgeEngine
 from experta.rule import Rule
 from experta.deffacts import DefFacts
-from experta.conditionalelement import AND
+from experta.conditionalelement import AND, OR
+from exception import FactNotFoundError
 
 from ES import Kebab
 
@@ -84,17 +85,13 @@ class DefFact(KnowledgeEngine):
         :return: Found
         :rtype: str
         """
-        return print('Found')
+        print('Found')
+        return self.facts
 
-    @Rule(Kebab(Type='Pork', Time=15))
-    def ChickenLongFried(self):
+    @Rule(Kebab(Type='Pork', Time=15, Action='Wait'))
+    def EditAction(self):
         """
-        Після пошуку Свинини перевіряємо час прожарювання та вказуємо на дію
-
-        :return: Rotate
-        :rtype: str
+        Edit Fact where type Pork, time 15, action wait
         """
-        try:
-            self.declare(self.modify(self.facts[1], Action='Rotate'))
-        except KeyError:
-            return print(self.facts)
+        fact_id = int(input(f'{self.facts}\nChange\tfact\tand\tenter\tfact_id:\n'))
+        return self.declare(self.modify(self.facts[fact_id], Action='Rotate')), print(self.facts)
