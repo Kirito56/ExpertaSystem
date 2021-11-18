@@ -77,21 +77,27 @@ class DefFact(KnowledgeEngine):
                     DoneAToTheMajority=False,
                     NumberOfPeople=2)
 
-    @Rule(Kebab(Type='Pork'))
-    def FindPorkMeat(self):
+    @Rule(Kebab(Type='Ostrich'))
+    def FindPorkMeat(self) -> str:
         """
         Правило знайти факт де тип м'яса - Свинина
 
         :return: Found
         :rtype: str
         """
-        print('Found')
-        return self.facts
+        return print('Ostrich Found')
 
     @Rule(Kebab(Type='Pork', Time=15, Action='Wait'))
-    def EditAction(self):
+    def EditAction(self) -> str:
         """
         Edit Fact where type Pork, time 15, action wait
+        :return: Modified Fact
+        :rtype: Fact
         """
-        fact_id = int(input(f'{self.facts}\nChange\tfact\tand\tenter\tfact_id:\n'))
-        return self.declare(self.modify(self.facts[fact_id], Action='Rotate')), print(self.facts)
+        facts = len(self.facts)
+        for i in range(facts):
+            fact = self.facts[i+1]
+            if fact.get('Type') == 'Pork' and fact.get('Time') == 15 and fact.get('Action') == 'Wait':
+                self.declare(self.modify(self.facts[i+1], Time=0, Action='Rotate', AlreadyTurnedOver=True))
+            i += 1
+        return print(self.facts)

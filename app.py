@@ -13,7 +13,6 @@ def start(engine: int,
         e = DefFact()
         e.reset()
         e.init_kebab()
-        print(e.facts)
         if delfacts and numoffact:
             num = int(input('Fact Number: '))
             e.retract(numoffact)
