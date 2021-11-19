@@ -26,4 +26,6 @@ class Kebab(Fact):
     BothSideReady = Field(bool, mandatory=True, default=False)
     Time = Field(int, mandatory=True, default=0)
     DoneAToTheMajority = Field(bool, mandatory=True, default=False)
-    NumberOfPeople = Field(int, mandatory=True, default=0)
+    NumberOfPeople = Field(list, mandatory=True, default=0)
+
+    
