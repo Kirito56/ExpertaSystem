@@ -16,14 +16,16 @@ class Kebab(Fact):
     * DoneAToTheMajority - Готово по думці більшості
     * NumberOfPeople - Кількість людей
     """
-    Type = Field(str, mandatory=True)
-    Action = Field(str, mandatory=True)
-    DegreeOfRoastiness = Field(int, mandatory=True)
-    AlreadyTurnedOver = Field(bool, mandatory=True)
-    PartyReady = Field(bool, mandatory=True)
-    DoneOnOneSide = Field(bool, mandatory=True)
-    DoneOnBothSides = Field(bool, mandatory=True)
-    BothSideReady = Field(bool, mandatory=True)
-    Time = Field(int, mandatory=True)
-    DoneAToTheMajority = Field(bool, mandatory=True)
-    NumberOfPeople = Field(int, mandatory=True)
+    Type = Field(str, mandatory=True, default='')
+    Action = Field(str, mandatory=True, default='')
+    DegreeOfRoastiness = Field(int, mandatory=True, default=0)
+    AlreadyTurnedOver = Field(bool, mandatory=True, default=False)
+    PartyReady = Field(bool, mandatory=True, default=False)
+    DoneOnOneSide = Field(bool, mandatory=True, default=False)
+    DoneOnBothSides = Field(bool, mandatory=True, default=False)
+    BothSideReady = Field(bool, mandatory=True, default=False)
+    Time = Field(int, mandatory=True, default=0)
+    DoneAToTheMajority = Field(bool, mandatory=True, default=False)
+    NumberOfPeople = Field(list, mandatory=True, default=0)
+
+    
