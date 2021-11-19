@@ -4,7 +4,7 @@
 
 ### 2 engines:
 * Asserts `2 Facts`
-* DefFact `6 Facts` `2 Rules` `Connected rules`
+* DefFact `6 Facts` `4 Rules` `Chain connection`
 
 ### 1 Experta System:
 * `Kebab`
