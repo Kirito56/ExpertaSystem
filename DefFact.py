@@ -6,11 +6,12 @@ from typing import Type
 from experta import factlist
 from experta.engine import KnowledgeEngine
 from experta.fact import Fact
+from experta.fieldconstraint import L, P
 from experta.operator import CONTAINS
 from experta.rule import Rule
 from experta.deffacts import DefFacts
 from experta.conditionalelement import AND, OR, TEST
-from experta.shortcuts import MATCH
+from experta.shortcuts import AS, MATCH
 from exception import FactNotFoundError
 
 from ES import Kebab
@@ -81,12 +82,24 @@ class DefFact(KnowledgeEngine):
         return rul
 
                 
-        
-
     @Rule(Kebab(Action='Чекати'))
     def _rule_chain_cont_1(self):
         """
         
         """
         pass
+
+    @Rule(Kebab(Type=~L('Свинина'), NumberOfPeople=MATCH.NumberOfPeople))
+    def _rule_with_L(self, NumberOfPeople):
+        output = f'{NumberOfPeople} has no kebab with Pork'
+        return print(output)
+    
+
+    @Rule(AS.kebab << Kebab(
+        BothSideReady=P(lambda x: x != True)
+    ))
+    def _rule_with_AS_P(self, kebab):
+        for type in kebab.as_dict()['Type']:
+            output = f'{kebab.as_dict()["Action"]} and Type is {type}'
+            return print(output)
                 
