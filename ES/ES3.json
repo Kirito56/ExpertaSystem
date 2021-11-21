@@ -1,0 +1,14 @@
+{
+	"Fact-id": 3,
+	"Type": "Кенгурятина",
+	"Action": "Забрати",
+	"DegreeOfRoastiness": "Сире",
+	"AlreadyTurnedOver": true,
+	"PartyReady": false,
+	"DoneOnOneSide": true,
+	"DoneOnBothSides": false,
+	"BothSideReady": true,
+	"DoneAToTheMajority": true,
+	"Time": 17,
+	"NumberOfPeople": ["Володя", "Женя", "Влад"]
+}
