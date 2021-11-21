@@ -1,5 +1,12 @@
+import os
+from os import access, path
+import random
+
 from typing import Type
+from experta import factlist
 from experta.engine import KnowledgeEngine
+from experta.fact import Fact
+from experta.operator import CONTAINS
 from experta.rule import Rule
 from experta.deffacts import DefFacts
 from experta.conditionalelement import AND, OR, TEST
@@ -12,74 +19,32 @@ from ES import Kebab
 class DefFact(KnowledgeEngine):
     @DefFacts()
     def init_kebab(self):
-        yield Kebab(Type='Pork',
-                    Action='Wait',
-                    DegreeOfRoastiness=2,
-                    AlreadyTurnedOver=False,
-                    PartyReady=True,
-                    DoneOnOneSide=True,
-                    DoneOnBothSides=False,
-                    BothSideReady=False,
-                    Time=15,
-                    DoneAToTheMajority=False,
-                    NumberOfPeople=['Anton', 'Georgyi'])
-        yield Kebab(Type='Ostrich',
-                    Action='Wait',
-                    DegreeOfRoastiness=2,
-                    AlreadyTurnedOver=False,
-                    PartyReady=True,
-                    DoneOnOneSide=True,
-                    DoneOnBothSides=False,
-                    BothSideReady=False,
-                    Time=10,
-                    DoneAToTheMajority=False,
-                    NumberOfPeople=[2])
-        yield Kebab(Type='Kangaroo',
-                    Action='Wait',
-                    DegreeOfRoastiness=2,
-                    AlreadyTurnedOver=False,
-                    PartyReady=True,
-                    DoneOnOneSide=True,
-                    DoneOnBothSides=False,
-                    BothSideReady=False,
-                    Time=10,
-                    DoneAToTheMajority=False,
-                    NumberOfPeople=[2])
-        yield Kebab(Type='Kangaroo',
-                    Action='Wait',
-                    DegreeOfRoastiness=2,
-                    AlreadyTurnedOver=False,
-                    PartyReady=True,
-                    DoneOnOneSide=True,
-                    DoneOnBothSides=False,
-                    BothSideReady=False,
-                    Time=15,
-                    DoneAToTheMajority=False,
-                    NumberOfPeople=[2])
-        yield Kebab(Type='Chicken',
-                    Action='Wait',
-                    DegreeOfRoastiness=2,
-                    AlreadyTurnedOver=False,
-                    PartyReady=True,
-                    DoneOnOneSide=True,
-                    DoneOnBothSides=False,
-                    BothSideReady=False,
-                    Time=10,
-                    DoneAToTheMajority=False,
-                    NumberOfPeople=[2])
-        yield Kebab(Type='Chicken',
-                    Action='Wait',
-                    DegreeOfRoastiness=2,
-                    AlreadyTurnedOver=False,
-                    PartyReady=True,
-                    DoneOnOneSide=True,
-                    DoneOnBothSides=False,
-                    BothSideReady=False,
-                    Time=15,
-                    DoneAToTheMajority=False,
-                    NumberOfPeople=[2])
+        j = int(input('Введіть кількість фактів: '))
+        for i in range(j):
+            Type=random.choice(['Свинина', 'Курка', 'Страусятина', 'Кенгурятина'])
+            Action=random.choice(['Чекати', 'Перевернути', 'Забрати'])
+            DegreeOfRoastiness=random.choice(['Сире', 'Починає піджарюватись', 'Піджарилось', 'Приговлений', 'Згорівший'])
+            AlreadyTurnedOver=random.choice([True, False])
+            PartyReady=random.choice([True, False])
+            DoneOnOneSide=random.choice([True, False])
+            DoneOnBothSides=random.choice([True, False])
+            BothSideReady=random.choice([True, False])
+            Time=random.randint(0, 30)
+            DoneAToTheMajority=random.choice([True, False])
+            NumberOfPeople=random.choice([["Іра", "Яна", "Влада"], 
+                        ["Володя", "Женя", "Влад"], ["Янасрав", "Вадім", "Олесь"]])
+            yield Kebab(Type=Type,
+                        Action=Action,DegreeOfRoastiness=DegreeOfRoastiness, 
+                        AlreadyTurnedOver=AlreadyTurnedOver,PartyReady=PartyReady,
+                        DoneOnOneSide=DoneOnOneSide,DoneOnBothSides=DoneOnBothSides,
+                        BothSideReady=BothSideReady,Time=Time,
+                        DoneAToTheMajority=DoneAToTheMajority,
+                        NumberOfPeople=NumberOfPeople)
+            Kebab.write_to_file(i,Type,Action,DegreeOfRoastiness,AlreadyTurnedOver,PartyReady,DoneOnOneSide,
+            DoneOnBothSides, BothSideReady, Time, DoneAToTheMajority, NumberOfPeople)
+            i += 1
 
-    @Rule(Kebab(Type='Pork', Time=15, Action='Wait'))
+    @Rule(Kebab(Type='Свинина', Time=15, Action='Чекати'))
     def _chain_start(self) -> str:
         """
         Початок ланцюга
@@ -87,38 +52,41 @@ class DefFact(KnowledgeEngine):
         :return: Found
         :rtype: str
         """
-        facts = len(self.facts)
-        for i in range(facts):
-            fact = self.facts[i+1]
-            if fact.get('Type') == 'Pork' and fact.get('Time') == 15 and fact.get('Action') == 'Wait':
-                self.declare(self.modify(self.facts[i+1], Time=0, Action='Rotate', AlreadyTurnedOver=True))
-            i += 1
-        return print('Pork Found')
+        self.facts.retract(0)
+        return print('Правило Найти Свинину Яка Жариться 15хв і дія Чекати')
+                
+            
 
-    @Rule(Kebab(Type='Pork', Time=0, Action='Rotate', AlreadyTurnedOver=True))
+    @Rule(Kebab(Type='Свинина', Time=0, Action='Перевернути', AlreadyTurnedOver=True))
     def _chain_cont(self) -> str:
         """
-        Продовження ланцюга
+        Продовження ланцюга\n
         :return: Modified Fact
-        :rtype: Fact
         """
-        facts = len(self.facts)
-        for i in range(facts):
-            try:
-                fact = self.facts[i+1]
-                if fact.get('Type') == 'Pork' and fact.get('Time') == 0 and fact.get('Action') == 'Rotate':
-                    return print(f'Fact:\t{i}\nType:{fact.get("Type")}\nAction:{fact.get("Action")}\nTime:{fact.get("Time")}')
-            except KeyError:
-                fact = self.facts[i+2]
-                if fact.get('Type') == 'Pork' and fact.get('Time') == 0 and fact.get('Action') == 'Rotate':
-                    return print(f'Fact:{i}\nType:{fact.get("Type")}\nAction:{fact.get("Action")}\nTime:{fact.get("Time")}')
-            i += 1
+        return print('Found')
+
 
     @Rule(Kebab(NumberOfPeople=MATCH.NumberOfPeople))
     def _rule_with_using_match(self, NumberOfPeople) -> str:
-        if 'Anton' in NumberOfPeople:
-            return print('Yes')
+        if 'Іра' in NumberOfPeople:
+            return print('Іра найдена')
 
     @Rule(Kebab(Time=MATCH.Time), TEST(lambda Time: Time<15))
     def _rule_with_using_test(self,  Time):
-        return print( Time)
+        return print(f'Час < 15: {Time}')
+
+    @Rule(Kebab(PartyReady=False))
+    def _rule_chain_1(self):
+        rul = self.facts.changes
+        return rul
+
+                
+        
+
+    @Rule(Kebab(Action='Чекати'))
+    def _rule_chain_cont_1(self):
+        """
+        
+        """
+        pass
+                
