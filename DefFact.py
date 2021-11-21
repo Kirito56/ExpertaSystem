@@ -159,3 +159,11 @@ class DefFact(KnowledgeEngine):
     def _rule_with_forall1(self):
         output = f'ForAllRule: All kebabs cooked'
         return print(output)
+    
+    def avarage(self, s, end):
+        result = (s+end)/2
+        return print(result)
+    
+    def avarage3(self, s, end, sum=None):
+        if sum: return print((s+end+sum)/3)
+        else: self.avarage(s, end)
