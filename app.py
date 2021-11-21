@@ -47,6 +47,8 @@ def start(engine: int,
             e.facts.clear()
         elif rules:
             e.run()
+            e.avarage(0, 30)
+            e.avarage3(0, 10, 30)
     elif engine == 2:
         e = Asserts()
         e.reset()
