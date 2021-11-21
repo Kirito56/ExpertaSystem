@@ -10,7 +10,7 @@ from experta.fieldconstraint import L, P
 from experta.operator import CONTAINS
 from experta.rule import Rule
 from experta.deffacts import DefFacts
-from experta.conditionalelement import AND, OR, TEST
+from experta.conditionalelement import AND, EXISTS, FORALL, NOT, OR, TEST
 from experta.shortcuts import AS, MATCH
 from exception import FactNotFoundError
 
@@ -123,3 +123,39 @@ class DefFact(KnowledgeEngine):
     def _rule_with_or_and(self, DegreeOfRoastiness):
         output = f'Ступінь піджаристості: {DegreeOfRoastiness}'  
         return print(output)          
+
+    @Rule(
+        EXISTS(Kebab(NumberOfPeople=P(lambda x: 'Іра' in x)))
+    )
+    def _rule_with_exists(self):
+        output = f'Іра присутня на жарці шашлику'
+        return print(output)
+    
+    @Rule(
+        NOT(NOT(Kebab(NumberOfPeople=P(lambda x: 'Іра' in x))))
+    )
+    def _rule_with_not_not(self):
+        output = f'Іра присутня на жарці шашлику'
+        return print(output)
+
+    @Rule(
+        FORALL(
+            Kebab(AlreadyTurnedOver=~L(False)),
+            Kebab(DegreeOfRoastiness='Приготовлений')
+        )
+    )
+    def _rule_with_forall(self):
+        output = f'ForAllRule: All kebabs cooked'
+        return print(output)
+    
+    @Rule(
+        NOT(
+            AND(
+                Kebab(AlreadyTurnedOver=~L(False)),
+                NOT(Kebab(DegreeOfRoastiness='Приготовлений'))
+            )
+        )
+    )
+    def _rule_with_forall1(self):
+        output = f'ForAllRule: All kebabs cooked'
+        return print(output)
