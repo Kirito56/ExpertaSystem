@@ -55,14 +55,14 @@ class Kebab(Fact):
         fiend8 = (f'\n\t"NumberOfPeople": {types[11]}\n'+'}')
         fiend8 = fiend8.replace("'", '"')
         text = text + field1 + field2 +field3+ field4 + field5 + field6 + fiend7 + fiend8
-        if os.path.exists(f'{os.getcwd()}\\ES'):
-            if os.path.exists(f'{os.getcwd()}\\ES\\ES{types[0]}.js'):
-                with open(f'{os.getcwd()}\\ES\\ES{types[0]}.json', mode='r+', encoding='UTF8') as file:
+        if os.path.exists(f'{os.getcwd()}/ES'):
+            if os.path.exists(f'{os.getcwd()}/ES/ES{types[0]}.js'):
+                with open(f'{os.getcwd()}/ES/ES{types[0]}.json', mode='r+', encoding='UTF8') as file:
                     file.write(text)
             else:
-                with open(f'{os.getcwd()}\\ES\\ES{types[0]}.json', mode='w', encoding='UTF8') as file:
+                with open(f'{os.getcwd()}/ES/ES{types[0]}.json', mode='w', encoding='UTF8') as file:
                     file.write(text)
         else:
-            os.mkdir(f'{os.getcwd()}\\ES')
-            with open(f'{os.getcwd()}\\ES\\ES{types[0]}.json', mode='w', encoding='UTF8') as file:
+            os.mkdir(f'{os.getcwd()}/ES')
+            with open(f'{os.getcwd()}/ES/ES{types[0]}.json', mode='w', encoding='UTF8') as file:
                 file.write(text)
