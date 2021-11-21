@@ -51,9 +51,10 @@ def start(engine: int,
         e = Asserts()
         e.reset()
         e.init_kebab()
-        print(e.facts)
         if delfacts:
             e.retract(numoffact)
+        elif rules:
+            e.run()
 
 
 if __name__ == "__main__":
