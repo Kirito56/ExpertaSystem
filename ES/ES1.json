@@ -1,0 +1,14 @@
+{
+	"Fact-id": 1,
+	"Type": "Курка",
+	"Action": "Чекати",
+	"DegreeOfRoastiness": "Починає піджарюватись",
+	"AlreadyTurnedOver": true,
+	"PartyReady": false,
+	"DoneOnOneSide": false,
+	"DoneOnBothSides": false,
+	"BothSideReady": true,
+	"DoneAToTheMajority": false,
+	"Time": 20,
+	"NumberOfPeople": ["Іра", "Яна", "Влада"]
+}
