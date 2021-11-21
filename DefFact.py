@@ -102,4 +102,24 @@ class DefFact(KnowledgeEngine):
         for type in kebab.as_dict()['Type']:
             output = f'{kebab.as_dict()["Action"]} and Type is {type}'
             return print(output)
-                
+
+    @Rule(OR(Kebab(Type=~L('Свинина'), Action=MATCH.Action),Kebab(Type=~L('Кенгурятина'), Action=MATCH.Action))) 
+    def _rule_with_or(self, Action):
+        output = f'Дія: {Action}'
+        return print(output)
+
+    @Rule(OR(Kebab(AlreadyTurnedOver=~L(True), Action=MATCH.Action),
+    Kebab(BothSideReady=~L(False), Time=P(lambda i: i > 15), Action=MATCH.Action)))
+    def _rule_with_or_l_p(self, Action):
+        output = f'Дія: {Action}'
+        return print(output)     
+
+    @Rule(OR(
+        AND(
+            Kebab(DegreeOfRoastiness=MATCH.DegreeOfRoastiness, DoneAToTheMajority=~L(True)),
+            Kebab(DegreeOfRoastiness=MATCH.DegreeOfRoastiness, DoneAToTheMajority=~L(False), DoneOnBothSides=~L(False))
+        ),
+        Kebab(DegreeOfRoastiness=MATCH.DegreeOfRoastiness, NumberOfPeople=P(lambda x: 'Іра' in x))))
+    def _rule_with_or_and(self, DegreeOfRoastiness):
+        output = f'Ступінь піджаристості: {DegreeOfRoastiness}'  
+        return print(output)          
