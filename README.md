@@ -7,7 +7,8 @@
 * Asserts `i Facts` `15 Rules` `Chain connection`
 * DefFact `i Facts` `15 Rules` `Chain connection`
 * JSON example 
-```json {
+```json 
+{
 	"Fact-id": 0,
 	"Type": "Курка",
 	"Action": "Чекати",
