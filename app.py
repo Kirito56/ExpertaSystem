@@ -92,7 +92,7 @@ def start(engine: int,
 
 
 if __name__ == "__main__":
-    engine = int(input(f'Engine:\n1.\tDefFacts\n2.\tAsserts\t(50%\tcomplete)\nChoice:\t{int}\t-\t'))
+    engine = int(input(f'Engine:\n1.\tDefFacts\n2.\tAsserts\nChoice:\t{int}\t-\t'))
     delete = bool(input(f'Delete\tFact:\nEmpty.\tNo\n1.\tYes\nChoice:\t{int}\t-\t'))
     modify = bool(input(f'Modify:\nEmpty.\tNo\n1.\tYes\nChoice:\t{int}\t-\t'))
     clear = bool(input(f'Clear:\nEmpty.\tNo\n1.\tYes\nChoice:\t{int}\t-\t'))

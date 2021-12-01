@@ -47,52 +47,54 @@ class DefFact(KnowledgeEngine):
 
     @Rule(Kebab(Type='Свинина', Time=15, Action='Чекати'))
     def _chain_start(self) -> str:
-        """
-        Початок ланцюга
+        """[summary]
 
-        :return: Found
-        :rtype: str
-        """
+        Returns:
+            str: [description]
+        """        
         self.facts.retract(0)
-        return print('Правило Найти Свинину Яка Жариться 15хв і дія Чекати')
+        output = 'Знайдено'
+        name = 'Правило 1'
+        description = 'Шукає факт де вказано:\nТип = Свинина,\nЧас = 15,\nДія = Чекати'
+        return Kebab.rules_output(name,output,description,1)
                 
             
 
     @Rule(Kebab(Type='Свинина', Time=0, Action='Перевернути', AlreadyTurnedOver=True))
     def _chain_cont(self) -> str:
-        """
-        Продовження ланцюга\n
-        :return: Modified Fact
-        """
-        return print('Found')
+        """[summary]
+
+        Returns:
+            str: [description]
+        """        
+        output = 'Found'
+        name = 'Правило 2'
+        description = 'Шукає факт де вказанo:\nTип = Свинина,\nЧас = 0,\nДія = перевернути,\nВже перевертали = Так'
+        return Kebab.rules_output(name, output, description,2)
 
 
     @Rule(Kebab(NumberOfPeople=MATCH.NumberOfPeople))
     def _rule_with_using_match(self, NumberOfPeople) -> str:
         if 'Іра' in NumberOfPeople:
-            return print('Іра найдена')
+            output = 'Іра найдена'
+            name = 'Правило 3'
+            description = 'Шукає факт де серед людей є Іра'
+            return Kebab.rules_output(name, output, description,3)
 
     @Rule(Kebab(Time=MATCH.Time), TEST(lambda Time: Time<15))
     def _rule_with_using_test(self,  Time):
-        return print(f'Час < 15: {Time}')
+        output = f'Час < 15: {Time}'
+        name = 'Правило 4'
+        description = 'Шукає факт де час меньше як зазначено в функції TEST'
+        return Kebab.rules_output(name, output, description,4)
 
-    @Rule(Kebab(PartyReady=False))
-    def _rule_chain_1(self):
-        rul = self.facts.changes
-        return rul
-
-                
-    @Rule(Kebab(Action='Чекати'))
-    def _rule_chain_cont_1(self):
-        """
-        
-        """
-        pass
 
     @Rule(Kebab(Type=~L('Свинина'), NumberOfPeople=MATCH.NumberOfPeople))
     def _rule_with_L(self, NumberOfPeople):
         output = f'{NumberOfPeople} has no kebab with Pork'
-        return print(output)
+        name = 'Правило 5'
+        description = 'Шукає факт де Тип не Свинина і Виводить людей'
+        return Kebab.rules_output(name, output, description,5)
     
 
     @Rule(AS.kebab << Kebab(
@@ -101,18 +103,24 @@ class DefFact(KnowledgeEngine):
     def _rule_with_AS_P(self, kebab):
         for type in kebab.as_dict()['Type']:
             output = f'{kebab.as_dict()["Action"]} and Type is {type}'
-            return print(output)
+            name = 'Правило 6'
+            description = 'Шукає факт де Друга сторона не готова'
+            return Kebab.rules_output(name, output, description,6)
 
     @Rule(OR(Kebab(Type=~L('Свинина'), Action=MATCH.Action),Kebab(Type=~L('Кенгурятина'), Action=MATCH.Action))) 
     def _rule_with_or(self, Action):
         output = f'Дія: {Action}'
-        return print(output)
+        name = 'Правило 7'
+        description = 'Шукає факт де Тип не свинина або де тип не Кенгуру'
+        return Kebab.rules_output(name, output, description,7)
 
     @Rule(OR(Kebab(AlreadyTurnedOver=~L(True), Action=MATCH.Action),
     Kebab(BothSideReady=~L(False), Time=P(lambda i: i > 15), Action=MATCH.Action)))
     def _rule_with_or_l_p(self, Action):
         output = f'Дія: {Action}'
-        return print(output)     
+        name = 'Правило 8'
+        description = 'Шукає факт де не перевертали або готово з другої сторони і функція де час меньше 15'
+        return Kebab.rules_output(name, output, description,8) 
 
     @Rule(OR(
         AND(
@@ -122,21 +130,27 @@ class DefFact(KnowledgeEngine):
         Kebab(DegreeOfRoastiness=MATCH.DegreeOfRoastiness, NumberOfPeople=P(lambda x: 'Іра' in x))))
     def _rule_with_or_and(self, DegreeOfRoastiness):
         output = f'Ступінь піджаристості: {DegreeOfRoastiness}'  
-        return print(output)          
+        name = 'Правило 9'
+        description = 'Шукає факт де не готово по думці більшості і готово по думці більшості або функція пошуку Іри серед людей'
+        return Kebab.rules_output(name, output, description,9)           
 
     @Rule(
         EXISTS(Kebab(NumberOfPeople=P(lambda x: 'Іра' in x)))
     )
     def _rule_with_exists(self):
         output = f'Іра присутня на жарці шашлику'
-        return print(output)
+        name = 'Правило 10'
+        description = 'Шукає факт де серед людей є Іра (EXIST())'
+        return Kebab.rules_output(name, output, description,9)
     
     @Rule(
         NOT(NOT(Kebab(NumberOfPeople=P(lambda x: 'Іра' in x))))
     )
     def _rule_with_not_not(self):
         output = f'Іра присутня на жарці шашлику'
-        return print(output)
+        name = 'Правило 11'
+        description = 'Шукає факт де серед людей є Іра (NOT(NOT()))'
+        return Kebab.rules_output(name, output, description,9)
 
     @Rule(
         FORALL(
@@ -146,7 +160,9 @@ class DefFact(KnowledgeEngine):
     )
     def _rule_with_forall(self):
         output = f'ForAllRule: All kebabs cooked'
-        return print(output)
+        name = 'Правило 12'
+        description = 'Шукає всі факти які були перевернуті та приготовлені (FORALL())'
+        return Kebab.rules_output(name, output, description,9)
     
     @Rule(
         NOT(
@@ -158,7 +174,9 @@ class DefFact(KnowledgeEngine):
     )
     def _rule_with_forall1(self):
         output = f'ForAllRule: All kebabs cooked'
-        return print(output)
+        name = 'Правило 13'
+        description = 'Шукає всі факти які були перевернуті та приготовлені (NOT(AND()))'
+        return Kebab.rules_output(name, output, description,9)
     
     def avarage(self, s, end):
         result = (s+end)/2
