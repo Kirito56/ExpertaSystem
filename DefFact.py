@@ -33,7 +33,7 @@ class DefFact(KnowledgeEngine):
             Time=random.randint(0, 30)
             DoneAToTheMajority=random.choice([True, False])
             NumberOfPeople=random.choice([["Іра", "Яна", "Влада"], 
-                        ["Володя", "Женя", "Влад"], ["Янасрав", "Вадім", "Олесь"]])
+                        ["Володя", "Женя", "Влад"], ["Ярослав", "Вадім", "Олесь"]])
             yield Kebab(Type=Type,
                         Action=Action,DegreeOfRoastiness=DegreeOfRoastiness, 
                         AlreadyTurnedOver=AlreadyTurnedOver,PartyReady=PartyReady,
