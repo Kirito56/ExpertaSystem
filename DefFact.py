@@ -43,7 +43,9 @@ class DefFact(KnowledgeEngine):
                         NumberOfPeople=NumberOfPeople)
             Kebab.write_to_file(i,Type,Action,DegreeOfRoastiness,AlreadyTurnedOver,PartyReady,DoneOnOneSide,
             DoneOnBothSides, BothSideReady, Time, DoneAToTheMajority, NumberOfPeople)
+            Kebab.add_line(f'{os.getcwd()}/ES/ES{i}.json')
             i += 1
+        
 
     @Rule(Kebab(Type='Свинина', Time=15, Action='Чекати'))
     def _chain_start(self) -> str:
@@ -56,7 +58,7 @@ class DefFact(KnowledgeEngine):
         output = 'Знайдено'
         name = 'Правило 1'
         description = 'Шукає факт де вказано:\nТип = Свинина,\nЧас = 15,\nДія = Чекати'
-        return Kebab.rules_output(name,output,description,1)
+        return Kebab.rules_output(name,output,description,1), Kebab.add_line(f'{os.getcwd()}/ES/rules1.json')
                 
             
 
@@ -70,7 +72,7 @@ class DefFact(KnowledgeEngine):
         output = 'Found'
         name = 'Правило 2'
         description = 'Шукає факт де вказанo:\nTип = Свинина,\nЧас = 0,\nДія = перевернути,\nВже перевертали = Так'
-        return Kebab.rules_output(name, output, description,2)
+        return Kebab.rules_output(name, output, description,2), Kebab.add_line(f'{os.getcwd()}/ES/rules2.json')
 
 
     @Rule(Kebab(NumberOfPeople=MATCH.NumberOfPeople))
@@ -79,14 +81,14 @@ class DefFact(KnowledgeEngine):
             output = 'Іра найдена'
             name = 'Правило 3'
             description = 'Шукає факт де серед людей є Іра'
-            return Kebab.rules_output(name, output, description,3)
+            return Kebab.rules_output(name, output, description,3), Kebab.add_line(f'{os.getcwd()}/ES/rules3.json')
 
     @Rule(Kebab(Time=MATCH.Time), TEST(lambda Time: Time<15))
     def _rule_with_using_test(self,  Time):
         output = f'Час < 15: {Time}'
         name = 'Правило 4'
         description = 'Шукає факт де час меньше як зазначено в функції TEST'
-        return Kebab.rules_output(name, output, description,4)
+        return Kebab.rules_output(name, output, description,4), Kebab.add_line(f'{os.getcwd()}/ES/rules4.json')
 
 
     @Rule(Kebab(Type=~L('Свинина'), NumberOfPeople=MATCH.NumberOfPeople))
@@ -94,7 +96,7 @@ class DefFact(KnowledgeEngine):
         output = f'{NumberOfPeople} has no kebab with Pork'
         name = 'Правило 5'
         description = 'Шукає факт де Тип не Свинина і Виводить людей'
-        return Kebab.rules_output(name, output, description,5)
+        return Kebab.rules_output(name, output, description,5), Kebab.add_line(f'{os.getcwd()}/ES/rules5.json')
     
 
     @Rule(AS.kebab << Kebab(
@@ -105,14 +107,14 @@ class DefFact(KnowledgeEngine):
             output = f'{kebab.as_dict()["Action"]} and Type is {type}'
             name = 'Правило 6'
             description = 'Шукає факт де Друга сторона не готова'
-            return Kebab.rules_output(name, output, description,6)
+            return Kebab.rules_output(name, output, description,6), Kebab.add_line(f'{os.getcwd()}/ES/rules6.json')
 
     @Rule(OR(Kebab(Type=~L('Свинина'), Action=MATCH.Action),Kebab(Type=~L('Кенгурятина'), Action=MATCH.Action))) 
     def _rule_with_or(self, Action):
         output = f'Дія: {Action}'
         name = 'Правило 7'
         description = 'Шукає факт де Тип не свинина або де тип не Кенгуру'
-        return Kebab.rules_output(name, output, description,7)
+        return Kebab.rules_output(name, output, description,7), Kebab.add_line(f'{os.getcwd()}/ES/rules7.json')
 
     @Rule(OR(Kebab(AlreadyTurnedOver=~L(True), Action=MATCH.Action),
     Kebab(BothSideReady=~L(False), Time=P(lambda i: i > 15), Action=MATCH.Action)))
@@ -120,7 +122,7 @@ class DefFact(KnowledgeEngine):
         output = f'Дія: {Action}'
         name = 'Правило 8'
         description = 'Шукає факт де не перевертали або готово з другої сторони і функція де час меньше 15'
-        return Kebab.rules_output(name, output, description,8) 
+        return Kebab.rules_output(name, output, description,8), Kebab.add_line(f'{os.getcwd()}/ES/rules8.json') 
 
     @Rule(OR(
         AND(
@@ -132,7 +134,7 @@ class DefFact(KnowledgeEngine):
         output = f'Ступінь піджаристості: {DegreeOfRoastiness}'  
         name = 'Правило 9'
         description = 'Шукає факт де не готово по думці більшості і готово по думці більшості або функція пошуку Іри серед людей'
-        return Kebab.rules_output(name, output, description,9)           
+        return Kebab.rules_output(name, output, description,9), Kebab.add_line(f'{os.getcwd()}/ES/rules9.json')           
 
     @Rule(
         EXISTS(Kebab(NumberOfPeople=P(lambda x: 'Іра' in x)))
@@ -141,7 +143,7 @@ class DefFact(KnowledgeEngine):
         output = f'Іра присутня на жарці шашлику'
         name = 'Правило 10'
         description = 'Шукає факт де серед людей є Іра (EXIST())'
-        return Kebab.rules_output(name, output, description,9)
+        return Kebab.rules_output(name, output, description,10), Kebab.add_line(f'{os.getcwd()}/ES/rules10.json')
     
     @Rule(
         NOT(NOT(Kebab(NumberOfPeople=P(lambda x: 'Іра' in x))))
@@ -150,7 +152,7 @@ class DefFact(KnowledgeEngine):
         output = f'Іра присутня на жарці шашлику'
         name = 'Правило 11'
         description = 'Шукає факт де серед людей є Іра (NOT(NOT()))'
-        return Kebab.rules_output(name, output, description,9)
+        return Kebab.rules_output(name, output, description,11), Kebab.add_line(f'{os.getcwd()}/ES/rules11.json')
 
     @Rule(
         FORALL(
@@ -162,7 +164,7 @@ class DefFact(KnowledgeEngine):
         output = f'ForAllRule: All kebabs cooked'
         name = 'Правило 12'
         description = 'Шукає всі факти які були перевернуті та приготовлені (FORALL())'
-        return Kebab.rules_output(name, output, description,9)
+        return Kebab.rules_output(name, output, description,12), Kebab.add_line(f'{os.getcwd()}/ES/rules12.json')
     
     @Rule(
         NOT(
@@ -176,7 +178,7 @@ class DefFact(KnowledgeEngine):
         output = f'ForAllRule: All kebabs cooked'
         name = 'Правило 13'
         description = 'Шукає всі факти які були перевернуті та приготовлені (NOT(AND()))'
-        return Kebab.rules_output(name, output, description,9)
+        return Kebab.rules_output(name, output, description,13), Kebab.add_line(f'{os.getcwd()}/ES/rules13.json')
     
     def avarage(self, s, end):
         result = (s+end)/2
@@ -185,3 +187,4 @@ class DefFact(KnowledgeEngine):
     def avarage3(self, s, end, sum=None):
         if sum: return print((s+end+sum)/3)
         else: self.avarage(s, end)
+            

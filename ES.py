@@ -36,7 +36,7 @@ class Kebab(Fact):
         Returns:
             [type]: [description]
         """        
-        text = ('{'+
+        text = (
         f'\n\t"Fact-id": {types[0]},\n\t"Type": "{types[1]}",\n\t"Action": "{types[2]}",\n\t"DegreeOfRoastiness": "{types[3]}",')
         field1 = (f'\n\t"AlreadyTurnedOver": true,')
         field2 = (f'\n\t"PartyReady": true,')
@@ -59,19 +59,20 @@ class Kebab(Fact):
         fiend7 = (f'\n\t"Time": {types[9]},')
         fiend8 = (f'\n\t"NumberOfPeople": {types[11]},\n')
         fiend8 = fiend8.replace("'", '"')
-        field9 = (f'\t"Added": "{datetime.datetime.utcnow().month}/{datetime.datetime.utcnow().day}/{datetime.datetime.utcnow().year} {datetime.datetime.utcnow().hour}:{datetime.datetime.utcnow().minute}:{datetime.datetime.utcnow().second}"' + '\n},\n')
+        field9 = (f'\t"Added": "{datetime.datetime.utcnow().month}/{datetime.datetime.utcnow().day}/{datetime.datetime.utcnow().year} {datetime.datetime.utcnow().hour}:{datetime.datetime.utcnow().minute}:{datetime.datetime.utcnow().second}"')
         text = text + field1 + field2 +field3+ field4 + field5 + field6 + fiend7 + fiend8 +field9
         if os.path.exists(f'{os.getcwd()}/ES'):
-            if os.path.exists(f'{os.getcwd()}/ES/ES.json'):
-                with open(f'{os.getcwd()}/ES/ES.json', mode='a', encoding='UTF8') as file:
+            if os.path.exists(f'{os.getcwd()}/ES/ES{types[0]}.json'):
+                with open(f'{os.getcwd()}/ES/ES{types[0]}.json', mode='a', encoding='UTF-8') as file:
                     return file.write(text)
             else:
-                with open(f'{os.getcwd()}/ES/ES.json', mode='w', encoding='UTF8') as file:
+                with open(f'{os.getcwd()}/ES/ES{types[0]}.json', mode='w', encoding='UTF-8') as file:
                     return file.write(text)
         else:
             os.mkdir(f'{os.getcwd()}/ES')
-            with open(f'{os.getcwd()}/ES/ES.json', mode='w', encoding='UTF8') as file:
+            with open(f'{os.getcwd()}/ES/ES{types[0]}.json', mode='w', encoding='UTF-8') as file:
                 return file.write(text)
+            
 
     @staticmethod
     def rules_output(*rule) -> str:
@@ -83,17 +84,24 @@ class Kebab(Fact):
         name = rule[0]        
         output = rule[1]        
         description = rule[2]        
-        if os.path.exists(f'{os.getcwd()}/ES/rules.json'):
-            with open(f'{os.getcwd()}/ES/rules.json', mode='a',encoding='UTF-8') as file:
-                l0 = '{\n'
-                l1 = l0 + f'\t"{name}": ' + '{\n'
+        if os.path.exists(f'{os.getcwd()}/ES/rules{rule[3]}.json'):
+            with open(f'{os.getcwd()}/ES/rules{rule[3]}.json', mode='a',encoding='UTF-8') as file:
+                l1 = f'\n\t"{name}": ' + '{\n'
                 l2 = l1 + f'\t\t"{description}": "{output}"' + '\n\t\t},\n'
-                field9 = (f'\t"Added": "{datetime.datetime.utcnow().month}/{datetime.datetime.utcnow().day}/{datetime.datetime.utcnow().year} {datetime.datetime.utcnow().hour}:{datetime.datetime.utcnow().minute}:{datetime.datetime.utcnow().second}"' + '\n},\n')
+                field9 = (f'\t"Added": "{datetime.datetime.utcnow().month}/{datetime.datetime.utcnow().day}/{datetime.datetime.utcnow().year} {datetime.datetime.utcnow().hour}:{datetime.datetime.utcnow().minute}:{datetime.datetime.utcnow().second}"')
                 return file.write(l2+field9)
+            
         else:
-            with open(f'{os.getcwd()}/ES/rules.json', mode='w',encoding='UTF-8') as file:
-                l0 = '{\n'
-                l1 = l0 + f'\t"{name}": ' + '{\n'
+            with open(f'{os.getcwd()}/ES/rules{rule[3]}.json', mode='w',encoding='UTF-8') as file:
+                l1 = f'\n\t"{name}": ' + '{\n'
                 l2 = l1 + f'\t\t"{description}": "{output}"' + '\n\t\t},\n'
-                field9 = (f'\t"Added": "{datetime.datetime.utcnow().month}/{datetime.datetime.utcnow().day}/{datetime.datetime.utcnow().year} {datetime.datetime.utcnow().hour}:{datetime.datetime.utcnow().minute}:{datetime.datetime.utcnow().second}"' + '\n},\n')
+                field9 = (f'\t"Added": "{datetime.datetime.utcnow().month}/{datetime.datetime.utcnow().day}/{datetime.datetime.utcnow().year} {datetime.datetime.utcnow().hour}:{datetime.datetime.utcnow().minute}:{datetime.datetime.utcnow().second}"')
                 return file.write(l2+field9)
+            
+    
+    @staticmethod
+    def add_line(path: str):
+        with open(path, 'r') as original:
+            data = original.read()
+        with open(path, 'w') as modified:
+            return modified.write('{' + data + '\n}')
