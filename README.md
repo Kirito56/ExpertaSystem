@@ -3,9 +3,15 @@
 [![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/Kirito56/ExpertaSystem/HEAD)
 
 ### 2 engines:
-`>> Вкажіть кількість фактів = i` `create folder ES with Facts`
-* Asserts `i Facts` `15 Rules` `Chain connection`
-* DefFact `i Facts` `15 Rules` `Chain connection`
+`>> Вкажіть кількість фактів = i` `create folder ES with Facts and Rules`
+* Asserts:
+	* `i Facts` 
+	* `15 Rules` 
+	* `Chain connection`
+* DefFact 
+	* `i Facts` 
+	* `15 Rules` 
+	* `Chain connection`
 * JSON example 
 ```json 
 {
@@ -30,9 +36,6 @@
 	"Added": "12/1/2021 9:31:12"
 }
 ```
-
-
-
 
 ### 1 Experta System:
 * `Kebab`
