@@ -15,8 +15,8 @@ def start(engine: int,
         e.init_kebab()
         if delfacts and numoffact:
             num = int(input('Виберіть вакт для видалення: '))
-            import pathlib, os
-            pathlib.Path.unlink(f'{os.getcwd()}/ES/ES{num}.json')
+            import os
+            os.remove(f'{os.getcwd()}/ES/ES{num}.json')
             e.retract(num)
         elif modify and numoffact:
             num = int(input('Виберіть факт щоб змінити на випадкове значення: '))
@@ -83,8 +83,8 @@ def start(engine: int,
         e.init_kebab()
         if delfacts and numoffact:
             num = int(input('Виберіть вакт для видалення: '))
-            import pathlib, os
-            pathlib.Path.unlink(f'{os.getcwd()}/ES/ES{num}.json')
+            import os
+            os.remove(f'{os.getcwd()}/ES/ES{num}.json')
             e.retract(num)
         elif modify and numoffact:
             num = int(input('Виберіть факт щоб змінити на випадкове значення: '))
