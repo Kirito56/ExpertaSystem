@@ -40,18 +40,18 @@
 ### 1 Experta System:
 * `Kebab`
 	* `Clips` template
-```clipsnet
+```c#
 (deftemplate Kebab
-	(slot Type)
-	(slot Action)
-	(slot DegreeOfRoastiness)
-	(slot AlreadyTurnedOver)
-	(slot PartyReady)
-	(slot DoneOnOneSide)
-	(slot DoneOnBothSides)
-	(slot BothSideReady)
-	(slot DoneAToTheMajority)
-	(slot Time)
-	(multislot NumberOfPeople)
+	(slot Type) // Тип м'яса (Курятина, Свинятина,Кенгуру)
+	(slot Action) // Дія (Чекати, Перевертати, Забрати)
+	(slot DegreeOfRoastiness)// Ступінь піджаристості (Сире, Піджарилось, Готове, Згоріло)
+	(slot AlreadyTurnedOver) // Вже (перевертали/не перевертали)
+	(slot PartyReady) // Сторона (готова/не готова)
+	(slot DoneOnOneSide) //(Готово/не готово) з однієї сторони
+	(slot DoneOnBothSides) // (Готово/Не готово) з обох сторін
+	(slot BothSideReady) // (Готова/Не готова) з другої сторони
+	(slot DoneAToTheMajority) // (Готова/Не готова) по думці більшості
+	(slot Time) // Час запікання шашлика (0-20)
+	(multislot NumberOfPeople) // Список людей на яких готовиться шашлик
 )
 ```
