@@ -19,7 +19,13 @@ from ES import Kebab
 
 class DefFact(KnowledgeEngine):
     @DefFacts()
-    def init_kebab(self):
+    def init_kebab(self) -> Kebab.write_to_file:
+        """Ініціалізація факту
+
+        Yields:
+            [type]: Створення факта
+        
+        """        
         j = int(input('Введіть кількість фактів: '))
         for i in range(j):
             Type=random.choice(['Свинина', 'Курка', 'Страусятина', 'Кенгурятина'])
@@ -48,11 +54,11 @@ class DefFact(KnowledgeEngine):
         
 
     @Rule(Kebab(Type='Свинина', Time=15, Action='Чекати'))
-    def _chain_start(self) -> str:
-        """[summary]
+    def _chain_start(self) -> Kebab.rules_output:
+        """Правило 1
 
         Returns:
-            str: [description]
+            Kebab.rules_output: записує правило в файл з розширенням .json
         """        
         self.facts.retract(0)
         output = 'Знайдено'
@@ -63,11 +69,11 @@ class DefFact(KnowledgeEngine):
             
 
     @Rule(Kebab(Type='Свинина', Time=0, Action='Перевернути', AlreadyTurnedOver=True))
-    def _chain_cont(self) -> str:
-        """[summary]
+    def _chain_cont(self) -> Kebab.rules_output:
+        """Правило 2
 
         Returns:
-            str: [description]
+            Kebab.rules_output: записує правило в файл з розширенням .json
         """        
         output = 'Found'
         name = 'Правило 2'
@@ -76,7 +82,15 @@ class DefFact(KnowledgeEngine):
 
 
     @Rule(Kebab(NumberOfPeople=MATCH.NumberOfPeople))
-    def _rule_with_using_match(self, NumberOfPeople) -> str:
+    def _rule_with_using_match(self, NumberOfPeople) -> Kebab.rules_output:
+        """Правило із функцією MATCH
+
+        Args:
+            NumberOfPeople (list): Список із іменами людей які присутні на жарці шашлику
+
+        Returns:
+            Kebab.rules_output: записує правило в файл з розширенням .json
+        """        
         if 'Іра' in NumberOfPeople:
             output = 'Іра найдена'
             name = 'Правило 3'
@@ -84,7 +98,15 @@ class DefFact(KnowledgeEngine):
             return Kebab.rules_output(name, output, description,3), Kebab.add_line(f'{os.getcwd()}/ES/rules3.json')
 
     @Rule(Kebab(Time=MATCH.Time), TEST(lambda Time: Time<15))
-    def _rule_with_using_test(self,  Time):
+    def _rule_with_using_test(self,  Time) -> Kebab.rules_output:
+        """Правило із функцією MATCH та TEST
+
+        Args:
+            Time (int): Час який меньше чим зазначено в функції TEST
+
+        Returns:
+            Kebab.rules_output: записує правило в файл з розширенням .json
+        """        
         output = f'Час < 15: {Time}'
         name = 'Правило 4'
         description = 'Шукає факт де час меньше як зазначено в функції TEST'
@@ -92,7 +114,15 @@ class DefFact(KnowledgeEngine):
 
 
     @Rule(Kebab(Type=~L('Свинина'), NumberOfPeople=MATCH.NumberOfPeople))
-    def _rule_with_L(self, NumberOfPeople):
+    def _rule_with_L(self, NumberOfPeople) -> Kebab.rules_output:
+        """Правило із використанням функції Не(L) та MATCH
+
+        Args:
+            NumberOfPeople (list): Список із іменами людей які присутні на жарці шашлику
+
+        Returns:
+            Kebab.rules_output: записує правило в файл з розширенням .json
+        """        
         output = f'{NumberOfPeople} has no kebab with Pork'
         name = 'Правило 5'
         description = 'Шукає факт де Тип не Свинина і Виводить людей'
@@ -102,7 +132,15 @@ class DefFact(KnowledgeEngine):
     @Rule(AS.kebab << Kebab(
         BothSideReady=P(lambda x: x != True)
     ))
-    def _rule_with_AS_P(self, kebab):
+    def _rule_with_AS_P(self, kebab) -> Kebab.rules_output:
+        """Правило із використанням функції Створеня словника(AS) та P
+
+        Args:
+            kebab (dict): факт перетворений в словник
+
+        Returns:
+            Kebab.rules_output: записує правило в файл з розширенням .json
+        """        
         for type in kebab.as_dict()['Type']:
             output = f'{kebab.as_dict()["Action"]} and Type is {type}'
             name = 'Правило 6'
@@ -110,7 +148,15 @@ class DefFact(KnowledgeEngine):
             return Kebab.rules_output(name, output, description,6), Kebab.add_line(f'{os.getcwd()}/ES/rules6.json')
 
     @Rule(OR(Kebab(Type=~L('Свинина'), Action=MATCH.Action),Kebab(Type=~L('Кенгурятина'), Action=MATCH.Action))) 
-    def _rule_with_or(self, Action):
+    def _rule_with_or(self, Action) -> Kebab.rules_output:
+        """Правило із використанням функції OR(АБО), L(НЕ), MATCH
+
+        Args:
+            Action ([type]): Дія яка відповідає факту не Свинина або не Кенгуру
+
+        Returns:
+            Kebab.rules_output: записує правило в файл з розширенням .json
+        """        
         output = f'Дія: {Action}'
         name = 'Правило 7'
         description = 'Шукає факт де Тип не свинина або де тип не Кенгуру'
@@ -118,7 +164,15 @@ class DefFact(KnowledgeEngine):
 
     @Rule(OR(Kebab(AlreadyTurnedOver=~L(True), Action=MATCH.Action),
     Kebab(BothSideReady=~L(False), Time=P(lambda i: i > 15), Action=MATCH.Action)))
-    def _rule_with_or_l_p(self, Action):
+    def _rule_with_or_l_p(self, Action) -> Kebab.rules_output:
+        """Правило із використанням функції OR(АБО), L(НЕ), MATCH, P
+
+        Args:
+            Action ([type]): Дія яка відповідає факту Не перевертали, час більше 15, готово з однієї сторони
+
+        Returns:
+            Kebab.rules_output: записує правило в файл з розширенням .json
+        """        
         output = f'Дія: {Action}'
         name = 'Правило 8'
         description = 'Шукає факт де не перевертали або готово з другої сторони і функція де час меньше 15'
@@ -130,7 +184,15 @@ class DefFact(KnowledgeEngine):
             Kebab(DegreeOfRoastiness=MATCH.DegreeOfRoastiness, DoneAToTheMajority=~L(False), DoneOnBothSides=~L(False))
         ),
         Kebab(DegreeOfRoastiness=MATCH.DegreeOfRoastiness, NumberOfPeople=P(lambda x: 'Іра' in x))))
-    def _rule_with_or_and(self, DegreeOfRoastiness):
+    def _rule_with_or_and(self, DegreeOfRoastiness) -> Kebab.rules_output:
+        """Правило із використанням функції OR(АБО), AND(І), L(НЕ), MATCH, P
+
+        Args:
+            DegreeOfRoastiness ([type]): Ступінь піджаристості який відповідає факту (Готово/Не готово) по думці більшості, готово з однієї сторони
+
+        Returns:
+            Kebab.rules_output: записує правило в файл з розширенням .json
+        """        
         output = f'Ступінь піджаристості: {DegreeOfRoastiness}'  
         name = 'Правило 9'
         description = 'Шукає факт де не готово по думці більшості і готово по думці більшості або функція пошуку Іри серед людей'
@@ -139,7 +201,12 @@ class DefFact(KnowledgeEngine):
     @Rule(
         EXISTS(Kebab(NumberOfPeople=P(lambda x: 'Іра' in x)))
     )
-    def _rule_with_exists(self):
+    def _rule_with_exists(self) -> Kebab.rules_output:
+        """Правило із використанням функції EXIST(Присутнє)
+
+        Returns:
+            Kebab.rules_output: записує правило в файл з розширенням .json
+        """        
         output = f'Іра присутня на жарці шашлику'
         name = 'Правило 10'
         description = 'Шукає факт де серед людей є Іра (EXIST())'
@@ -148,7 +215,12 @@ class DefFact(KnowledgeEngine):
     @Rule(
         NOT(NOT(Kebab(NumberOfPeople=P(lambda x: 'Іра' in x))))
     )
-    def _rule_with_not_not(self):
+    def _rule_with_not_not(self) -> Kebab.rules_output:
+        """Правило із використанням функції EXIST(Присутнє) тільки замість EXIST - NOT(NOT())
+
+        Returns:
+            Kebab.rules_output: записує правило в файл з розширенням .json
+        """        
         output = f'Іра присутня на жарці шашлику'
         name = 'Правило 11'
         description = 'Шукає факт де серед людей є Іра (NOT(NOT()))'
@@ -160,7 +232,12 @@ class DefFact(KnowledgeEngine):
             Kebab(DegreeOfRoastiness='Приготовлений')
         )
     )
-    def _rule_with_forall(self):
+    def _rule_with_forall(self) -> Kebab.rules_output:
+        """Правило із використанням функції FORALL(Для всіх)
+
+        Returns:
+            Kebab.rules_output: записує правило в файл з розширенням .json
+        """        
         output = f'ForAllRule: All kebabs cooked'
         name = 'Правило 12'
         description = 'Шукає всі факти які були перевернуті та приготовлені (FORALL())'
@@ -174,17 +251,41 @@ class DefFact(KnowledgeEngine):
             )
         )
     )
-    def _rule_with_forall1(self):
+    def _rule_with_forall1(self) -> Kebab.rules_output:
+        """Правило із використанням функції FORALL(Для всіх) тільки замість FORALL - NOT(AND(NOT()))
+
+        Returns:
+            Kebab.rules_output: записує правило в файл з розширенням .json
+        """        
         output = f'ForAllRule: All kebabs cooked'
         name = 'Правило 13'
         description = 'Шукає всі факти які були перевернуті та приготовлені (NOT(AND()))'
         return Kebab.rules_output(name, output, description,13), Kebab.add_line(f'{os.getcwd()}/ES/rules13.json')
     
-    def avarage(self, s, end):
+    def avarage(self, s: int, end: int) -> int:
+        """Рахує середнє значення по часу приготування
+
+        Args:
+            s (int): Початковий час
+            end (int): Кінцевий час
+
+        Returns:
+            int: Середнє значення часу
+        """        
         result = (s+end)/2
         return print(result)
     
-    def avarage3(self, s, end, sum=None):
+    def avarage3(self, s: int, end: int, sum=None) -> avarage:
+        """Рахує середнє значення по часу приготування тільки для 3
+
+        Args:
+            s (int): Початковий час
+            end (int): Кінцевий час
+            sum ([type], optional): [description]. Defaults to None.
+
+        Returns:
+            avarage: Рахує середнє значення по часу приготування
+        """        
         if sum: return print((s+end+sum)/3)
         else: self.avarage(s, end)
             
