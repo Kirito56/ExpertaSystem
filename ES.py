@@ -87,14 +87,14 @@ class Kebab(Fact):
         if os.path.exists(f'{os.getcwd()}/ES/rules{rule[3]}.json'):
             with open(f'{os.getcwd()}/ES/rules{rule[3]}.json', mode='w',encoding='UTF-8') as file:
                 l1 = f'\n\t"{name}": ' + '{\n'
-                l2 = l1 + f'\t\t"{description}": "{output}"' + '\n\t\t},\n'
+                l2 = l1 + f'\t\t"{description}": ">>{output}"' + '\n\t\t},\n'
                 field9 = (f'\t"Added": "{datetime.datetime.utcnow().month}/{datetime.datetime.utcnow().day}/{datetime.datetime.utcnow().year} {datetime.datetime.utcnow().hour}:{datetime.datetime.utcnow().minute}:{datetime.datetime.utcnow().second}"')
                 return file.write(l2+field9)
             
         else:
             with open(f'{os.getcwd()}/ES/rules{rule[3]}.json', mode='w',encoding='UTF-8') as file:
                 l1 = f'\n\t"{name}": ' + '{\n'
-                l2 = l1 + f'\t\t"{description}": "{output}"' + '\n\t\t},\n'
+                l2 = l1 + f'\t\t"{description}": ">>{output}"' + '\n\t\t},\n'
                 field9 = (f'\t"Added": "{datetime.datetime.utcnow().month}/{datetime.datetime.utcnow().day}/{datetime.datetime.utcnow().year} {datetime.datetime.utcnow().hour}:{datetime.datetime.utcnow().minute}:{datetime.datetime.utcnow().second}"')
                 return file.write(l2+field9)
             
