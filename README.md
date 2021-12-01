@@ -39,3 +39,19 @@
 
 ### 1 Experta System:
 * `Kebab`
+	* `Clips` template
+```clipsnet
+(deftemplate Kebab
+	(slot Type)
+	(slot Action)
+	(slot DegreeOfRoastiness)
+	(slot AlreadyTurnedOver)
+	(slot PartyReady)
+	(slot DoneOnOneSide)
+	(slot DoneOnBothSides)
+	(slot BothSideReady)
+	(slot DoneAToTheMajority)
+	(slot Time)
+	(multislot NumberOfPeople)
+)
+```
