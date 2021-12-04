@@ -10,7 +10,7 @@ Database = dict(
     username=os.getenv('username', 'Solus'),
     password=os.getenv('password', 'H0v55E3q8i8DjvqOdGy3'),
     host=os.getenv('host', 'rocketchat.6olwp.mongodb.net'),
-    database=os.getenv('database', 'Experta_System')
+    database=os.getenv('database', 'Experta?retryWrites=true&w=majority')
 )
 DatabaseLite = dict(
     dialect=str(os.getenv('DIALECTLITE', 'sqlite')),
