@@ -14,7 +14,7 @@ Database = dict(
 )
 DatabaseLite = dict(
     dialect=str(os.getenv('DIALECTLITE', 'sqlite')),
-    database=os.environ.get("DATABASELITE", ':memory:')
+    database=os.environ.get("DATABASELITE", 'ES.db')
 )
 
 MONGO_URI = f'{Database.get("dialect")}+{Database.get("driver")}://{Database.get("username")}:{Database.get("password")}@{Database.get("host")}'
