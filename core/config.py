@@ -17,7 +17,7 @@ DatabaseLite = dict(
     database=os.environ.get("DATABASELITE", 'ES.db')
 )
 
-MONGO_URI = f'{Database.get("dialect")}+{Database.get("driver")}://{Database.get("username")}:{Database.get("password")}@{Database.get("host")}'
+MONGO_URI = f'mongodb+srv://Solus:H0v55E3q8i8DjvqOdGy3@cluster0.5f3ng.mongodb.net/Experta?retryWrites=true&w=majority'
 SQLITE_URI = f'{DatabaseLite.get("dialect")}:///{DatabaseLite.get("database")}'
 
 db = create_engine(SQLITE_URI)
