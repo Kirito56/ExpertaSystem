@@ -2,7 +2,7 @@ from sqlalchemy import Column, Integer, String, Boolean
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
 
-from core.config import db, series_collection, insert_document
+from core.config import db, insert_document, client
 
 Model = declarative_base()
 Session = sessionmaker()
@@ -86,6 +86,8 @@ class Kebab(Model):
         )
         session.add(es)
         session.commit()
+        mongo = client['Experta_System']
+        series_collection = mongo['ES'] 
         return insert_document(series_collection, data)
 
     @staticmethod
