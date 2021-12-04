@@ -1,4 +1,6 @@
 import os, datetime
+from re import I, T
+
 from experta.fact import Fact, Field
 
 
