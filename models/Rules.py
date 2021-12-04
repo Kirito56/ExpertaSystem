@@ -31,7 +31,7 @@ class Rules(Model):
 
     @staticmethod
     def get_list() -> list:
-        all_rules = Rules.query.all()
+        all_rules = session.query(Rules).all()
         return all_rules
 
     @staticmethod
@@ -63,7 +63,7 @@ class Rules(Model):
 
     @staticmethod
     def upd_by_id(rule_id, raw) -> object:
-        obj = Rules.query.filter_by(RuleId=rule_id).first()
+        obj = session.query(Rules).filter_by(RuleId=rule_id).first()
         for r in raw:
             if hasattr(obj, r):
                 setattr(obj, r, raw[r])
@@ -72,7 +72,7 @@ class Rules(Model):
 
     @staticmethod
     def get_by_id(rule_id) -> object:
-        obj = Rules.query.filter_by(RuleId=rule_id).first()
+        obj = session.query(Rules).filter_by(RuleId=rule_id).first()
         if not obj:
             raise 'Rules not found'
         return obj

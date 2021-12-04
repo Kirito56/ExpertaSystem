@@ -44,7 +44,7 @@ class Kebab(Model):
 
     @staticmethod
     def get_list():
-        all_kebabs = Kebab.query.all()
+        all_kebabs = session.query(Kebab).all()
         return all_kebabs
 
     @staticmethod
@@ -90,7 +90,7 @@ class Kebab(Model):
 
     @staticmethod
     def upd_by_id(kebab_id, raw):
-        obj = Kebab.query.filter_by(id=kebab_id).first()
+        obj = session.query(Kebab).filter_by(id=kebab_id).first()
         for r in raw:
             if hasattr(obj, r):
                 setattr(obj, r, raw[r])
@@ -100,12 +100,12 @@ class Kebab(Model):
     def get_by_attr(self, raw):
         for r in raw:
             if hasattr(self, r):
-                obj = self.query.filter_by(r=raw[r]).first()
+                obj = session.query(self).filter_by(r=raw[r]).first()
                 return obj
 
     @staticmethod
     def get_by_id(kebab_id):
-        obj = Kebab.query.filter_by(id=kebab_id).first()
+        obj = session.query(Kebab).filter_by(id=kebab_id).first()
         if not obj:
             raise 'Kebab not found'
         return obj
