@@ -1,6 +1,9 @@
+from re import I
 from ES import Kebab
-from DefFact import DefFact
-from Asserts import Asserts
+from core.DefFact import DefFact
+from core.Asserts import Asserts
+from models.Rules import Rules, Model
+from models.Kebab import Kebab as MKebab, Model as KModel
 
 
 def start(engine: int,
@@ -21,55 +24,77 @@ def start(engine: int,
         elif modify and numoffact:
             num = int(input('Виберіть факт щоб змінити на випадкове значення: '))
             import random
-            Type=random.choice(['Свинина', 'Курка', 'Страусятина', 'Кенгурятина'])
-            Action=random.choice(['Чекати', 'Перевернути', 'Забрати'])
-            DegreeOfRoastiness=random.choice(['Сире', 'Починає піджарюватись', 'Піджарилось', 'Приговлений', 'Згорівший'])
-            AlreadyTurnedOver=random.choice([True, False])
-            PartyReady=random.choice([True, False])
-            DoneOnOneSide=random.choice([True, False])
-            DoneOnBothSides=random.choice([True, False])
-            BothSideReady=random.choice([True, False])
-            Time=random.randint(0, 30)
-            DoneAToTheMajority=random.choice([True, False])
-            NumberOfPeople=random.choice([["Іра", "Яна", "Влада"], 
-                        ["Володя", "Женя", "Влад"], ["Ярослав", "Вадім", "Олесь"]])
+            Type = random.choice(['Свинина', 'Курка', 'Страусятина', 'Кенгурятина'])
+            Action = random.choice(['Чекати', 'Перевернути', 'Забрати'])
+            DegreeOfRoastiness = random.choice(
+                ['Сире', 'Починає піджарюватись', 'Піджарилось', 'Приговлений', 'Згорівший'])
+            AlreadyTurnedOver = random.choice([True, False])
+            PartyReady = random.choice([True, False])
+            DoneOnOneSide = random.choice([True, False])
+            DoneOnBothSides = random.choice([True, False])
+            BothSideReady = random.choice([True, False])
+            Time = random.randint(0, 30)
+            DoneAToTheMajority = random.choice([True, False])
+            NumberOfPeople = random.choice([["Іра", "Яна", "Влада"],
+                                            ["Володя", "Женя", "Влад"], ["Ярослав", "Вадім", "Олесь"]])
             e.declare(e.modify(e.facts[num], Type=Type,
-                                Action=Action,
-                                DegreeOfRoastiness=DegreeOfRoastiness,
-                                AlreadyTurnedOver=AlreadyTurnedOver,
-                                PartyReady=PartyReady,
-                                DoneOnOneSide=DoneOnOneSide,
-                                DoneOnBothSides=DoneOnBothSides, 
-                                BothSideReady=BothSideReady, Time=Time, DoneAToTheMajority=DoneAToTheMajority,
-                                NumberOfPeople=NumberOfPeople))
-            Kebab.write_to_file(num,Type,Action,DegreeOfRoastiness,AlreadyTurnedOver,PartyReady,DoneOnOneSide,
-            DoneOnBothSides, BothSideReady, Time, DoneAToTheMajority, NumberOfPeople)
+                               Action=Action,
+                               DegreeOfRoastiness=DegreeOfRoastiness,
+                               AlreadyTurnedOver=AlreadyTurnedOver,
+                               PartyReady=PartyReady,
+                               DoneOnOneSide=DoneOnOneSide,
+                               DoneOnBothSides=DoneOnBothSides,
+                               BothSideReady=BothSideReady, Time=Time, DoneAToTheMajority=DoneAToTheMajority,
+                               NumberOfPeople=NumberOfPeople))
+            data = dict(
+                Type=Type,
+                Action=Action,
+                DegreeOfRoastiness=DegreeOfRoastiness,
+                AlreadyTurnedOver=AlreadyTurnedOver,
+                PartyReady=PartyReady,
+                DoneOnOneSide=DoneOnOneSide,
+                DoneOnBothSides=DoneOnBothSides,
+                BothSideReady=BothSideReady, Time=Time, DoneAToTheMajority=DoneAToTheMajority,
+                NumberOfPeople=NumberOfPeople
+            )
+            MKebab.upd_by_id(num, data)
         elif modify and numoffact and rules:
             num = int(input('Виберіть факт щоб змінити на випадкове значення: '))
             import random
-            Type=random.choice(['Свинина', 'Курка', 'Страусятина', 'Кенгурятина'])
-            Action=random.choice(['Чекати', 'Перевернути', 'Забрати'])
-            DegreeOfRoastiness=random.choice(['Сире', 'Починає піджарюватись', 'Піджарилось', 'Приговлений', 'Згорівший'])
-            AlreadyTurnedOver=random.choice([True, False])
-            PartyReady=random.choice([True, False])
-            DoneOnOneSide=random.choice([True, False])
-            DoneOnBothSides=random.choice([True, False])
-            BothSideReady=random.choice([True, False])
-            Time=random.randint(0, 30)
-            DoneAToTheMajority=random.choice([True, False])
-            NumberOfPeople=random.choice([["Іра", "Яна", "Влада"], 
-                        ["Володя", "Женя", "Влад"], ["Ярослав", "Вадім", "Олесь"]])
+            Type = random.choice(['Свинина', 'Курка', 'Страусятина', 'Кенгурятина'])
+            Action = random.choice(['Чекати', 'Перевернути', 'Забрати'])
+            DegreeOfRoastiness = random.choice(
+                ['Сире', 'Починає піджарюватись', 'Піджарилось', 'Приговлений', 'Згорівший'])
+            AlreadyTurnedOver = random.choice([True, False])
+            PartyReady = random.choice([True, False])
+            DoneOnOneSide = random.choice([True, False])
+            DoneOnBothSides = random.choice([True, False])
+            BothSideReady = random.choice([True, False])
+            Time = random.randint(0, 30)
+            DoneAToTheMajority = random.choice([True, False])
+            NumberOfPeople = random.choice([["Іра", "Яна", "Влада"],
+                                            ["Володя", "Женя", "Влад"], ["Ярослав", "Вадім", "Олесь"]])
             e.declare(e.modify(e.facts[num], Type=Type,
-                                Action=Action,
-                                DegreeOfRoastiness=DegreeOfRoastiness,
-                                AlreadyTurnedOver=AlreadyTurnedOver,
-                                PartyReady=PartyReady,
-                                DoneOnOneSide=DoneOnOneSide,
-                                DoneOnBothSides=DoneOnBothSides, 
-                                BothSideReady=BothSideReady, Time=Time, DoneAToTheMajority=DoneAToTheMajority,
-                                NumberOfPeople=NumberOfPeople))
-            Kebab.write_to_file(num,Type,Action,DegreeOfRoastiness,AlreadyTurnedOver,PartyReady,DoneOnOneSide,
-            DoneOnBothSides, BothSideReady, Time, DoneAToTheMajority, NumberOfPeople)
+                               Action=Action,
+                               DegreeOfRoastiness=DegreeOfRoastiness,
+                               AlreadyTurnedOver=AlreadyTurnedOver,
+                               PartyReady=PartyReady,
+                               DoneOnOneSide=DoneOnOneSide,
+                               DoneOnBothSides=DoneOnBothSides,
+                               BothSideReady=BothSideReady, Time=Time, DoneAToTheMajority=DoneAToTheMajority,
+                               NumberOfPeople=NumberOfPeople))
+            data = dict(
+                Type=Type,
+                Action=Action,
+                DegreeOfRoastiness=DegreeOfRoastiness,
+                AlreadyTurnedOver=AlreadyTurnedOver,
+                PartyReady=PartyReady,
+                DoneOnOneSide=DoneOnOneSide,
+                DoneOnBothSides=DoneOnBothSides,
+                BothSideReady=BothSideReady, Time=Time, DoneAToTheMajority=DoneAToTheMajority,
+                NumberOfPeople=NumberOfPeople
+            )
+            MKebab.upd_by_id(num, data)
             e.run()
         elif clear:
             e.facts.clear()
@@ -80,6 +105,7 @@ def start(engine: int,
     elif engine == 2:
         e = Asserts()
         e.reset()
+
         e.init_kebab()
         if delfacts and numoffact:
             num = int(input('Виберіть вакт для видалення: '))
@@ -89,55 +115,77 @@ def start(engine: int,
         elif modify and numoffact:
             num = int(input('Виберіть факт щоб змінити на випадкове значення: '))
             import random
-            Type=random.choice(['Свинина', 'Курка', 'Страусятина', 'Кенгурятина'])
-            Action=random.choice(['Чекати', 'Перевернути', 'Забрати'])
-            DegreeOfRoastiness=random.choice(['Сире', 'Починає піджарюватись', 'Піджарилось', 'Приговлений', 'Згорівший'])
-            AlreadyTurnedOver=random.choice([True, False])
-            PartyReady=random.choice([True, False])
-            DoneOnOneSide=random.choice([True, False])
-            DoneOnBothSides=random.choice([True, False])
-            BothSideReady=random.choice([True, False])
-            Time=random.randint(0, 30)
-            DoneAToTheMajority=random.choice([True, False])
-            NumberOfPeople=random.choice([["Іра", "Яна", "Влада"], 
-                        ["Володя", "Женя", "Влад"], ["Ярослав", "Вадім", "Олесь"]])
+            Type = random.choice(['Свинина', 'Курка', 'Страусятина', 'Кенгурятина'])
+            Action = random.choice(['Чекати', 'Перевернути', 'Забрати'])
+            DegreeOfRoastiness = random.choice(
+                ['Сире', 'Починає піджарюватись', 'Піджарилось', 'Приговлений', 'Згорівший'])
+            AlreadyTurnedOver = random.choice([True, False])
+            PartyReady = random.choice([True, False])
+            DoneOnOneSide = random.choice([True, False])
+            DoneOnBothSides = random.choice([True, False])
+            BothSideReady = random.choice([True, False])
+            Time = random.randint(0, 30)
+            DoneAToTheMajority = random.choice([True, False])
+            NumberOfPeople = random.choice([["Іра", "Яна", "Влада"],
+                                            ["Володя", "Женя", "Влад"], ["Ярослав", "Вадім", "Олесь"]])
             e.declare(e.modify(e.facts[num], Type=Type,
-                                Action=Action,
-                                DegreeOfRoastiness=DegreeOfRoastiness,
-                                AlreadyTurnedOver=AlreadyTurnedOver,
-                                PartyReady=PartyReady,
-                                DoneOnOneSide=DoneOnOneSide,
-                                DoneOnBothSides=DoneOnBothSides, 
-                                BothSideReady=BothSideReady, Time=Time, DoneAToTheMajority=DoneAToTheMajority,
-                                NumberOfPeople=NumberOfPeople))
-            Kebab.write_to_file(num,Type,Action,DegreeOfRoastiness,AlreadyTurnedOver,PartyReady,DoneOnOneSide,
-            DoneOnBothSides, BothSideReady, Time, DoneAToTheMajority, NumberOfPeople)
+                               Action=Action,
+                               DegreeOfRoastiness=DegreeOfRoastiness,
+                               AlreadyTurnedOver=AlreadyTurnedOver,
+                               PartyReady=PartyReady,
+                               DoneOnOneSide=DoneOnOneSide,
+                               DoneOnBothSides=DoneOnBothSides,
+                               BothSideReady=BothSideReady, Time=Time, DoneAToTheMajority=DoneAToTheMajority,
+                               NumberOfPeople=NumberOfPeople))
+            data = dict(
+                Type=Type,
+                Action=Action,
+                DegreeOfRoastiness=DegreeOfRoastiness,
+                AlreadyTurnedOver=AlreadyTurnedOver,
+                PartyReady=PartyReady,
+                DoneOnOneSide=DoneOnOneSide,
+                DoneOnBothSides=DoneOnBothSides,
+                BothSideReady=BothSideReady, Time=Time, DoneAToTheMajority=DoneAToTheMajority,
+                NumberOfPeople=NumberOfPeople
+            )
+            MKebab.upd_by_id(num, data)
         elif modify and numoffact and rules:
             num = int(input('Виберіть факт щоб змінити на випадкове значення: '))
             import random
-            Type=random.choice(['Свинина', 'Курка', 'Страусятина', 'Кенгурятина'])
-            Action=random.choice(['Чекати', 'Перевернути', 'Забрати'])
-            DegreeOfRoastiness=random.choice(['Сире', 'Починає піджарюватись', 'Піджарилось', 'Приговлений', 'Згорівший'])
-            AlreadyTurnedOver=random.choice([True, False])
-            PartyReady=random.choice([True, False])
-            DoneOnOneSide=random.choice([True, False])
-            DoneOnBothSides=random.choice([True, False])
-            BothSideReady=random.choice([True, False])
-            Time=random.randint(0, 30)
-            DoneAToTheMajority=random.choice([True, False])
-            NumberOfPeople=random.choice([["Іра", "Яна", "Влада"], 
-                        ["Володя", "Женя", "Влад"], ["Ярослав", "Вадім", "Олесь"]])
+            Type = random.choice(['Свинина', 'Курка', 'Страусятина', 'Кенгурятина'])
+            Action = random.choice(['Чекати', 'Перевернути', 'Забрати'])
+            DegreeOfRoastiness = random.choice(
+                ['Сире', 'Починає піджарюватись', 'Піджарилось', 'Приговлений', 'Згорівший'])
+            AlreadyTurnedOver = random.choice([True, False])
+            PartyReady = random.choice([True, False])
+            DoneOnOneSide = random.choice([True, False])
+            DoneOnBothSides = random.choice([True, False])
+            BothSideReady = random.choice([True, False])
+            Time = random.randint(0, 30)
+            DoneAToTheMajority = random.choice([True, False])
+            NumberOfPeople = random.choice([["Іра", "Яна", "Влада"],
+                                            ["Володя", "Женя", "Влад"], ["Ярослав", "Вадім", "Олесь"]])
             e.declare(e.modify(e.facts[num], Type=Type,
-                                Action=Action,
-                                DegreeOfRoastiness=DegreeOfRoastiness,
-                                AlreadyTurnedOver=AlreadyTurnedOver,
-                                PartyReady=PartyReady,
-                                DoneOnOneSide=DoneOnOneSide,
-                                DoneOnBothSides=DoneOnBothSides, 
-                                BothSideReady=BothSideReady, Time=Time, DoneAToTheMajority=DoneAToTheMajority,
-                                NumberOfPeople=NumberOfPeople))
-            Kebab.write_to_file(num,Type,Action,DegreeOfRoastiness,AlreadyTurnedOver,PartyReady,DoneOnOneSide,
-            DoneOnBothSides, BothSideReady, Time, DoneAToTheMajority, NumberOfPeople)
+                               Action=Action,
+                               DegreeOfRoastiness=DegreeOfRoastiness,
+                               AlreadyTurnedOver=AlreadyTurnedOver,
+                               PartyReady=PartyReady,
+                               DoneOnOneSide=DoneOnOneSide,
+                               DoneOnBothSides=DoneOnBothSides,
+                               BothSideReady=BothSideReady, Time=Time, DoneAToTheMajority=DoneAToTheMajority,
+                               NumberOfPeople=NumberOfPeople))
+            data = dict(
+                Type=Type,
+                Action=Action,
+                DegreeOfRoastiness=DegreeOfRoastiness,
+                AlreadyTurnedOver=AlreadyTurnedOver,
+                PartyReady=PartyReady,
+                DoneOnOneSide=DoneOnOneSide,
+                DoneOnBothSides=DoneOnBothSides,
+                BothSideReady=BothSideReady, Time=Time, DoneAToTheMajority=DoneAToTheMajority,
+                NumberOfPeople=NumberOfPeople
+            )
+            MKebab.upd_by_id(num, data)
             e.run()
         elif clear:
             e.facts.clear()
@@ -148,6 +196,10 @@ def start(engine: int,
 
 
 if __name__ == "__main__":
+    from core.config import db
+
+    Model.metadata.create_all(db)
+    KModel.metadata.create_all(db)
     engine = int(input(f'Engine:\n1.\tDefFacts\n2.\tAsserts\nВаш вибір:\t{int}\t-\t'))
     delete = bool(input(f'Delete\tFact:\nEmpty.\tNo\n1.\tYes\nВаш вибір:\t{int}\t-\t'))
     modify = bool(input(f'Modify:\nEmpty.\tNo\n1.\tYes\nВаш вибір:\t{int}\t-\t'))
