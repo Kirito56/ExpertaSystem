@@ -21,7 +21,7 @@ MONGO_URI = f'{Database.get("dialect")}+{Database.get("driver")}://{Database.get
 SQLITE_URI = f'{DatabaseLite.get("dialect")}:///{DatabaseLite.get("database")}'
 
 db = create_engine(SQLITE_URI)
-client = MongoClient(MONGO_URI)
+client = MongoClient(MONGO_URI, connect=False)
 mongo = client['Experta_System']
 series_collection = mongo['ES']
 series_collection_rule = mongo['Rules']
