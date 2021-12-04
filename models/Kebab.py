@@ -1,9 +1,8 @@
-from re import I
-from sqlalchemy.sql.schema import PrimaryKeyConstraint
 from sqlalchemy import Column, Integer, String, Boolean
-from sqlalchemy.orm import sessionmaker
 from sqlalchemy.ext.declarative import declarative_base
-from core.config import db
+from sqlalchemy.orm import sessionmaker
+
+from core.config import db, series_collection, insert_document
 
 Model = declarative_base()
 Session = sessionmaker()
@@ -51,10 +50,10 @@ class Kebab(Model):
     def list_to_str(data: list):
         data0 = f'{data[0]}'
         data0 = data0.replace('"', '')
-        data1 = f'{data[0]}'
-        data1 = data0.replace('"', '')
-        data2 = f'{data[0]}'
-        data2 = data0.replace('"', '')
+        data1 = f'{data[1]}'
+        data1 = data1.replace('"', '')
+        data2 = f'{data[2]}'
+        data2 = data2.replace('"', '')
         result = data0 + ',' + data1 + ',' + data2
         return result
 
@@ -71,7 +70,7 @@ class Kebab(Model):
     @staticmethod
     def add_new(Type, Action, DegreeOfRoasting,
                 AlreadyTurnedOver, PartyReady, DoneOnOneSide, DoneOnBothSides,
-                BothSideReady, Time, DoneAToTheMajority, NumberOfPeople):
+                BothSideReady, Time, DoneAToTheMajority, NumberOfPeople, data):
         es = Kebab(
             Type=Type,
             Action=Action,
@@ -87,13 +86,14 @@ class Kebab(Model):
         )
         session.add(es)
         session.commit()
+        return insert_document(series_collection, data)
 
     @staticmethod
     def upd_by_id(kebab_id, raw):
         obj = session.query(Kebab).filter_by(id=kebab_id).first()
-        for r in raw:
-            if hasattr(obj, r):
-                setattr(obj, r, raw[r])
+        for key, value in raw:
+            if hasattr(obj, key):
+                setattr(obj, key, value)
         session.commit()
         return obj
 

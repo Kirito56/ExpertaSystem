@@ -1,9 +1,7 @@
-from re import I
-from ES import Kebab
-from core.DefFact import DefFact
 from core.Asserts import Asserts
-from models.Rules import Rules, Model
-from models.Kebab import Kebab as MKebab, Model as KModel
+from core.DefFact import DefFact
+from models.Kebab import Kebab as MKebab, Model
+from models.Rules import Model as RModel
 
 
 def start(engine: int,
@@ -196,16 +194,25 @@ def start(engine: int,
 
 
 if __name__ == "__main__":
-    from core.config import db
-
-    Model.metadata.create_all(db)
-    KModel.metadata.create_all(db)
+    from core.config import db, series_collection
     engine = int(input(f'Engine:\n1.\tDefFacts\n2.\tAsserts\nВаш вибір:\t{int}\t-\t'))
     delete = bool(input(f'Delete\tFact:\nEmpty.\tNo\n1.\tYes\nВаш вибір:\t{int}\t-\t'))
     modify = bool(input(f'Modify:\nEmpty.\tNo\n1.\tYes\nВаш вибір:\t{int}\t-\t'))
     clear = bool(input(f'Clear:\nEmpty.\tNo\n1.\tYes\nВаш вибір:\t{int}\t-\t'))
     rules = bool(input(f'Rules:\nEmpty.\tNo\n1.\tYes\nВаш вибір:\t{int}\t-\t'))
+    table = bool(input(f'DataBase:\nEmpty.\tCreate\n1.\tReWrite\nВаш вибір:\t{int}\t-\t'))
+    if table:
+        Model.metadata.drop_all(db)
+        RModel.metadata.drop_all(db)
+        series_collection.drop()
+        Model.metadata.create_all(db)
+        RModel.metadata.create_all(db)
+    else:
+        Model.metadata.create_all(db)
+        RModel.metadata.create_all(db)
     print(f'Engine:\t{engine}\nВидалення:\t{delete}\nРедагування:\t{modify}\nОчищення:\t{clear}\nПравила:\t{rules}')
     if delete or modify or clear or rules:
         numoffact = True
         start(engine, modify=modify, numoffact=numoffact, delfacts=delete, clear=clear, rules=rules)
+    
+    

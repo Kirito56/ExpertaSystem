@@ -1,12 +1,9 @@
-import os
-from os import name
-from re import T
-from sqlalchemy.sql.schema import PrimaryKeyConstraint
-from sqlalchemy import Column, Integer, String, Boolean
-from sqlalchemy.orm import sessionmaker
+from sqlalchemy import Column, Integer, String
 from sqlalchemy.ext.declarative import declarative_base
-from core.config import db
-from experta.rule import Rule
+from sqlalchemy.orm import sessionmaker
+from datetime import datetime as time
+
+from core.config import db, series_collection_rule, insert_document
 
 Model = declarative_base()
 Session = sessionmaker()
@@ -52,8 +49,18 @@ class Rules(Model):
             Description=Description,
             Output=Output
         )
+        new_coll = dict(
+            RuleId=RuleId,
+            rule=dict(
+                Name=Name,
+                Description=Description,
+                Output=Output
+            ),
+            added=time.utcnow()
+        )
         session.add(rule)
         session.commit()
+        return insert_document(series_collection_rule, new_coll)
 
     def to_dict(self) -> dict:
         row = {}

@@ -1,5 +1,5 @@
-import os, datetime
-from re import I, T
+import datetime
+import os
 
 from experta.fact import Fact, Field
 
