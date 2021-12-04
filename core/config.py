@@ -1,4 +1,6 @@
 import os
+import json
+from re import T
 from sqlalchemy import create_engine
 
 Database = dict(
@@ -26,11 +28,11 @@ def wrap_response(data, errors=None):
             data=body,
             status='OK'
         )
-        return make_response
+        return json.dumps(make_response, sort_keys=True)
     else:
         make_response = dict(
             data=body,
             status='Failed'
         )
-        return make_response
+        return json.dumps(make_response, sort_keys=True)
         
