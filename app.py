@@ -204,7 +204,6 @@ if __name__ == "__main__":
     if table:
         Model.metadata.drop_all(db)
         RModel.metadata.drop_all(db)
-        series_collection.drop()
         Model.metadata.create_all(db)
         RModel.metadata.create_all(db)
     else:
