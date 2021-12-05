@@ -22,7 +22,7 @@ SQLITE_URI = f'{DatabaseLite.get("dialect")}:///{DatabaseLite.get("database")}'
 
 db = create_engine(SQLITE_URI)
 client = MongoClient(MONGO_URI)
-mongo = client.EXPERTA
+mongo = client.Experta
 collectionES = db.ES
 collectionRules = db.Rules
 
