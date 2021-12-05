@@ -34,8 +34,8 @@ class Kebab(Fact):
 
     @staticmethod
     def to_json(facts: list, rules: list):
-        if os.path.exists(f'{os.getcwd()}\\{str("outputs.json")}'):
-            with open(f'{os.getcwd()}\\{str("outputs.json")}', mode='w', encoding='UTF-8') as json:
+        if os.path.exists(f'{os.getcwd()}/{str("outputs.json")}'):
+            with open(f'{os.getcwd()}/{str("outputs.json")}', mode='w', encoding='UTF-8') as json:
                 def to_dict():
                     out = dict(
                         facts=facts,
@@ -44,7 +44,7 @@ class Kebab(Fact):
                     return out
                 json.write(f'{to_dict()}')
         else:
-            with open(f'{os.getcwd()}\\{str("outputs.json")}', mode='w', encoding='UTF-8') as json:
+            with open(f'{os.getcwd()}/{str("outputs.json")}', mode='w', encoding='UTF-8') as json:
                 def to_dict():
                     out = dict(
                         facts=facts,
