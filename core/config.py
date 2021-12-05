@@ -17,15 +17,14 @@ DatabaseLite = dict(
     database=os.environ.get("DATABASELITE", 'ES.db')
 )
 
-MONGO_URI = f'mongodb+srv://Solus:H0v55E3q8i8DjvqOdGy3@cluster0.5f3ng.mongodb.net/Experta?retryWrites=true&w=majority'
+MONGO_URI = f'mongodb+srv://Custom:3VHn95mUqKqkzu8u@cluster0.5f3ng.mongodb.net/test?retryWrites=true&w=majority'
 SQLITE_URI = f'{DatabaseLite.get("dialect")}:///{DatabaseLite.get("database")}'
 
 db = create_engine(SQLITE_URI)
 client = MongoClient(MONGO_URI)
-mongo = client['Experta_System']
-series_collection = mongo['ES']
-series_collection_rule = mongo['Rules']
-
+mongo = client.EXPERTA
+collectionES = db.ES
+collectionRules = db.Rules
 
 def wrap_response(data, errors=None):
     body = data
