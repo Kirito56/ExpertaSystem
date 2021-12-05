@@ -1,14 +1,17 @@
-from sqlalchemy import Column, Integer, String, Boolean
+from re import I
+from sqlalchemy import Column, Integer, String, Boolean, DateTime
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
+from datetime import datetime as time
 
-from core.config import db, insert_document, collectionES as collection
+from core.config import db
 
 Model = declarative_base()
 Session = sessionmaker()
 Session.configure(bind=db)
 session = Session()
 
+__version__ = '0.9'
 
 class Kebab(Model):
     __tablename__ = 'Experta'
@@ -25,6 +28,7 @@ class Kebab(Model):
     Time = Column(Integer, default=0)
     DoneAToTheMajority = Column(Boolean, default=False)
     NumberOfPeople = Column(String(255), default='')
+    Added = Column(DateTime, default=time.utcnow())
 
     def __init__(self, Type, Action, DegreeOfRoasting,
                  AlreadyTurnedOver, PartyReady, DoneOnOneSide, DoneOnBothSides,
@@ -42,7 +46,7 @@ class Kebab(Model):
         self.NumberOfPeople = NumberOfPeople
 
     @staticmethod
-    def get_list():
+    def get_list() -> list:
         all_kebabs = session.query(Kebab).all()
         return all_kebabs
 
@@ -58,10 +62,10 @@ class Kebab(Model):
         return result
 
     @staticmethod
-    def to_dict_list(objs):
-        result = []
-        for o in objs:
-            row = {}
+    def to_dict_list(object):
+        result = list()
+        for o in object:
+            row = dict()
             for c in o.__table__.columns:
                 row[c.name] = getattr(o, c.name)
             result.append(row)
@@ -85,8 +89,8 @@ class Kebab(Model):
             NumberOfPeople=Kebab.list_to_str(NumberOfPeople)
         )
         session.add(es)
-        session.commit()
-        return insert_document(collection, data)
+        return session.commit()
+        
 
     @staticmethod
     def upd_by_id(kebab_id, raw):

@@ -1,15 +1,16 @@
-from sqlalchemy import Column, Integer, String
+from sqlalchemy import Column, Integer, String, DateTime
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
 from datetime import datetime as time
 
-from core.config import db, series_collection_rule, insert_document
+from core.config import db
 
 Model = declarative_base()
 Session = sessionmaker()
 Session.configure(bind=db)
 session = Session()
 
+__version__ = '0.9'
 
 class Rules(Model):
     __tablename__ = 'Rules'
@@ -19,6 +20,7 @@ class Rules(Model):
     Name = Column(String)
     Description = Column(String)
     Output = Column(String)
+    Added = Column(DateTime, default=time.utcnow())
 
     def __init__(self, RuleId, Name, Description, Output):
         self.RuleId = RuleId
@@ -27,43 +29,33 @@ class Rules(Model):
         self.Output = Output
 
     @staticmethod
-    def get_list() -> list:
+    def get_list() -> "list(dict(), dict())":
         all_rules = session.query(Rules).all()
         return all_rules
 
     @staticmethod
-    def to_dict_list(objs) -> list:
-        result = []
-        for o in objs:
-            row = {}
+    def to_dict_list(object) -> "list(dict(), dict())":
+        result = list()
+        for o in object:
+            row = dict()
             for c in o.__table__.columns:
                 row[c.name] = getattr(o, c.name)
             result.append(row)
         return result
 
     @staticmethod
-    def add_new(RuleId, Name, Description, Output) -> session:
+    def add_new(RuleId, Name, Description, Output) -> sessionmaker:
         rule = Rules(
             RuleId=RuleId,
             Name=Name,
             Description=Description,
             Output=Output
         )
-        new_coll = dict(
-            RuleId=RuleId,
-            rule=dict(
-                Name=Name,
-                Description=Description,
-                Output=Output
-            ),
-            added=time.utcnow()
-        )
         session.add(rule)
-        session.commit()
-        return insert_document(series_collection_rule, new_coll)
+        return session.commit()
 
     def to_dict(self) -> dict:
-        row = {}
+        row = dict()
         for c in self.__table__.columns:
             row[c.name] = getattr(self, c.name)
         return row

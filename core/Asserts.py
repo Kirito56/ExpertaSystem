@@ -7,7 +7,7 @@ from experta.conditionalelement import AND, EXISTS, FORALL, NOT, OR, TEST
 from experta.shortcuts import AS, MATCH
 from core.exception import FactNotFoundError
 
-from ES import Kebab
+from core.ES import Kebab
 
 class Asserts(KnowledgeEngine):
     def init_kebab(self):
