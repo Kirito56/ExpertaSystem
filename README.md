@@ -1,6 +1,7 @@
 # ExpertaSystem
 
-[![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/Kirito56/ExpertaSystem/HEAD)
+- [![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/Kirito56/ExpertaSystem/HEAD)
+- [![launch @ gesis.org](https://notebooks.gesis.org/binder/badge_logo.svg)](https://notebooks.gesis.org/binder/v2/gh/Kirito56/ExpertaSystem/HEAD)
 
 ### 2 engines:
 `>> Вкажіть кількість фактів = i` `create folder ES with Facts and Rules`
