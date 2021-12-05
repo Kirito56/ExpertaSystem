@@ -194,7 +194,13 @@ def start(engine: int,
 
 
 if __name__ == "__main__":
-    from core.config import db, series_collection
+    from core.config import db
+    import pymongo
+    client = pymongo.MongoClient("mongodb+srv://Custom:3VHn95mUqKqkzu8u@cluster0.5f3ng.mongodb.net/Experta?retryWrites=true&w=majority")
+    mongo = client.EXPERTA
+    collectionES = mongo.ES
+    collectionRules = mongo.Rules
+    print(mongo.list_collection_names())
     engine = int(input(f'Engine:\n1.\tDefFacts\n2.\tAsserts\nВаш вибір:\t{int}\t-\t'))
     delete = bool(input(f'Delete\tFact:\nEmpty.\tNo\n1.\tYes\nВаш вибір:\t{int}\t-\t'))
     modify = bool(input(f'Modify:\nEmpty.\tNo\n1.\tYes\nВаш вибір:\t{int}\t-\t'))
