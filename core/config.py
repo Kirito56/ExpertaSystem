@@ -49,7 +49,7 @@ def insert_document(collection, data: dict):
         collection ([type]): [description]
         data (dict): [description]
     """
-    return collection.insert_one(data).inserted_id
+    return collection.insert(data).inserted_id
 
 
 def find_document(collection, elements, multiple=False):
@@ -60,16 +60,16 @@ def find_document(collection, elements, multiple=False):
         results = collection.find(elements)
         return [r for r in results]
     else:
-        return collection.find_one(elements)
+        return collection.find(elements)
 
 
 def update_document(collection, query_elements, new_values):
     """ Function to update a single document in a collection.
     """
-    collection.update_one(query_elements, {'$set': new_values})
+    collection.update(query_elements, {'$set': new_values})
 
 
 def delete_document(collection, query):
     """ Function to delete a single document from a collection.
     """
-    collection.delete_one(query)
+    collection.delete(query)
