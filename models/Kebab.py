@@ -1,3 +1,4 @@
+import os
 from re import I
 from sqlalchemy import Column, Integer, String, Boolean, DateTime
 from sqlalchemy.ext.declarative import declarative_base
@@ -95,9 +96,9 @@ class Kebab(Model):
     @staticmethod
     def upd_by_id(kebab_id, raw):
         obj = session.query(Kebab).filter_by(id=kebab_id).first()
-        for key, value in raw:
+        for key in raw:
             if hasattr(obj, key):
-                setattr(obj, key, value)
+                setattr(obj, key, getattr(obj, key))
         session.commit()
         return obj
 

@@ -38,7 +38,7 @@ class Kebab(Fact):
     NumberOfPeople = Field(list, mandatory=True, default=[])
 
     @staticmethod
-    def to_json(F: Kebab, R: Rules):
+    def to_json(F: Kebab, R: Rules, rule=None):
         if os.path.exists(f'{os.getcwd()}/{str("outputs.json")}'):
             with open(f'{os.getcwd()}/{str("outputs.json")}', mode='w', encoding='UTF-8') as json:
                 def to_dict():
@@ -92,24 +92,44 @@ class Kebab(Fact):
                         Description.append(o.Description)
                         Output.append('>>'+ o.Output)
                         AddedR.append(time_to_str(o.Added))
-                    out = ('{'+'"Facts": \n\t{\n\t\t' + f'"Id": {id}' + ',\n\t\t'+
-                    f'"Type" : {Type}'.replace("'", '"') + ',\n\t\t' + f'"Action": {Action}'.replace("'", '"') + 
-                    ',\n\t\t'+ f'"DegreeOfRoastiness": {DegreeOfRoastiness}'.replace("'", '"') +
-                    ',\n\t\t' + f'"AlreadyTurnedOver": {AlreadyTurnedOver}'.replace("'", '"') +
-                    ',\n\t\t' + f'"PartyReady": {PartyReady}'.replace("'", '"') + 
-                    ',\n\t\t' + f'"DoneOnOneSide": {DoneOnOneSide}'.replace("'", '"') + 
-                    ',\n\t\t' + f'"DoneOnBothSides": {DoneOnBothSides}'.replace("'", '"') +
-                    ',\n\t\t' + f'"BothSideReady": {BothSideReady}'.replace("'", '"') +
-                    ',\n\t\t' + f'"Time": {Time}' +
-                    ',\n\t\t' + f'"NumberOfPeople": {NumberOfPeople}'.replace("'", '"') +
-                    ',\n\t\t' + f'"Added": {Added}'.replace("'", '"') + 
-                    '\n\t}' + ',\n\t' + '"Rules" :\n\t{\n\t\t' + f'"Id": {RuleId}' +
-                    ',\n\t\t' + f'"Name": {Name}'.replace("'", '"') + 
-                    ',\n\t\t' + f'"Description": {Description}'.replace("'", '"') +
-                    ',\n\t\t' + f'"Output": {Output}'.replace("'", '"') +
-                    ',\n\t\t' + f'"Added": {AddedR}'.replace("'", '"') +
-                    '\n\t}' + '\n}')
-                    return out
+                    if rule:
+                        out = ('{'+'"Facts": \n\t{\n\t\t' + f'"Id": {id}' + ',\n\t\t'+
+                        f'"Type" : {Type}'.replace("'", '"') + ',\n\t\t' + f'"Action": {Action}'.replace("'", '"') + 
+                        ',\n\t\t'+ f'"DegreeOfRoastiness": {DegreeOfRoastiness}'.replace("'", '"') +
+                        ',\n\t\t' + f'"AlreadyTurnedOver": {AlreadyTurnedOver}'.replace("'", '"') +
+                        ',\n\t\t' + f'"PartyReady": {PartyReady}'.replace("'", '"') + 
+                        ',\n\t\t' + f'"DoneOnOneSide": {DoneOnOneSide}'.replace("'", '"') + 
+                        ',\n\t\t' + f'"DoneOnBothSides": {DoneOnBothSides}'.replace("'", '"') +
+                        ',\n\t\t' + f'"BothSideReady": {BothSideReady}'.replace("'", '"') +
+                        ',\n\t\t' + f'"Time": {Time}' +
+                        ',\n\t\t' + f'"NumberOfPeople": {NumberOfPeople}'.replace("'", '"') +
+                        ',\n\t\t' + f'"Added": {Added}'.replace("'", '"') + 
+                        '\n\t}' + ',\n\t' + '"Rules" :\n\t{\n\t\t' + f'"Id": {RuleId}' +
+                        ',\n\t\t' + f'"Name": {Name}'.replace("'", '"') + 
+                        ',\n\t\t' + f'"Description": {Description}'.replace("'", '"') +
+                        ',\n\t\t' + f'"Output": {Output}'.replace("'", '"') +
+                        ',\n\t\t' + f'"Added": {AddedR}'.replace("'", '"') +
+                        '\n\t}' + '\n}')
+                        return out
+                    else:
+                        out = ('{'+'"Facts": \n\t{\n\t\t' + f'"Id": {id}' + ',\n\t\t'+
+                        f'"Type" : {Type}'.replace("'", '"') + ',\n\t\t' + f'"Action": {Action}'.replace("'", '"') + 
+                        ',\n\t\t'+ f'"DegreeOfRoastiness": {DegreeOfRoastiness}'.replace("'", '"') +
+                        ',\n\t\t' + f'"AlreadyTurnedOver": {AlreadyTurnedOver}'.replace("'", '"') +
+                        ',\n\t\t' + f'"PartyReady": {PartyReady}'.replace("'", '"') + 
+                        ',\n\t\t' + f'"DoneOnOneSide": {DoneOnOneSide}'.replace("'", '"') + 
+                        ',\n\t\t' + f'"DoneOnBothSides": {DoneOnBothSides}'.replace("'", '"') +
+                        ',\n\t\t' + f'"BothSideReady": {BothSideReady}'.replace("'", '"') +
+                        ',\n\t\t' + f'"Time": {Time}' +
+                        ',\n\t\t' + f'"NumberOfPeople": {NumberOfPeople}'.replace("'", '"') +
+                        ',\n\t\t' + f'"Added": {Added}'.replace("'", '"') + 
+                        '\n\t}' + ',\n\t' + '"Rules" :\n\t{\n\t\t' + f'"Id": "{None}"' +
+                        ',\n\t\t' + f'"Name": "{None}"'.replace("'", '"') + 
+                        ',\n\t\t' + f'"Description": "{None}"'.replace("'", '"') +
+                        ',\n\t\t' + f'"Output": "{None}"'.replace("'", '"') +
+                        ',\n\t\t' + f'"Added": "{None}"'.replace("'", '"') +
+                        '\n\t}' + '\n}')
+                        return out
                 json.write(to_dict())
         else:
             with open(f'{os.getcwd()}/{str("outputs.json")}', mode='w', encoding='UTF-8') as json:
@@ -166,22 +186,42 @@ class Kebab(Fact):
                         # Outputs = Outputs.replace('])', '')
                         Output.append('>>'+ o.Output)
                         AddedR.append(time_to_str(o.Added))
-                    out = ('{'+'"Facts": \n\t{\n\t\t' + f'"Id": {id}' + ',\n\t\t'+
-                    f'"Type" : {Type}'.replace("'", '"') + ',\n\t\t' + f'"Action": {Action}'.replace("'", '"') + 
-                    ',\n\t\t'+ f'"DegreeOfRoastiness": {DegreeOfRoastiness}'.replace("'", '"') +
-                    ',\n\t\t' + f'"AlreadyTurnedOver": {AlreadyTurnedOver}'.replace("'", '"') +
-                    ',\n\t\t' + f'"PartyReady": {PartyReady}'.replace("'", '"') + 
-                    ',\n\t\t' + f'"DoneOnOneSide": {DoneOnOneSide}'.replace("'", '"') + 
-                    ',\n\t\t' + f'"DoneOnBothSides": {DoneOnBothSides}'.replace("'", '"') +
-                    ',\n\t\t' + f'"BothSideReady": {BothSideReady}'.replace("'", '"') +
-                    ',\n\t\t' + f'"Time": {Time}' +
-                    ',\n\t\t' + f'"NumberOfPeople": {NumberOfPeople}'.replace("'", '"') +
-                    ',\n\t\t' + f'"Added": {Added}'.replace("'", '"') + 
-                    '\n\t}' + ',\n\t' + '"Rules" :\n\t{\n\t\t' + f'"Id": {RuleId}' +
-                    ',\n\t\t' + f'"Name": {Name}'.replace("'", '"') + 
-                    ',\n\t\t' + f'"Description": {Description}'.replace("'", '"') +
-                    ',\n\t\t' + f'"Output": {Output}'.replace("'", '"') +
-                    ',\n\t\t' + f'"Added": {AddedR}'.replace("'", '"') +
-                    '\n\t}' + '\n}')
-                    return out
+                    if rule:
+                        out = ('{'+'"Facts": \n\t{\n\t\t' + f'"Id": {id}' + ',\n\t\t'+
+                        f'"Type" : {Type}'.replace("'", '"') + ',\n\t\t' + f'"Action": {Action}'.replace("'", '"') + 
+                        ',\n\t\t'+ f'"DegreeOfRoastiness": {DegreeOfRoastiness}'.replace("'", '"') +
+                        ',\n\t\t' + f'"AlreadyTurnedOver": {AlreadyTurnedOver}'.replace("'", '"') +
+                        ',\n\t\t' + f'"PartyReady": {PartyReady}'.replace("'", '"') + 
+                        ',\n\t\t' + f'"DoneOnOneSide": {DoneOnOneSide}'.replace("'", '"') + 
+                        ',\n\t\t' + f'"DoneOnBothSides": {DoneOnBothSides}'.replace("'", '"') +
+                        ',\n\t\t' + f'"BothSideReady": {BothSideReady}'.replace("'", '"') +
+                        ',\n\t\t' + f'"Time": {Time}' +
+                        ',\n\t\t' + f'"NumberOfPeople": {NumberOfPeople}'.replace("'", '"') +
+                        ',\n\t\t' + f'"Added": {Added}'.replace("'", '"') + 
+                        '\n\t}' + ',\n\t' + '"Rules" :\n\t{\n\t\t' + f'"Id": {RuleId}' +
+                        ',\n\t\t' + f'"Name": {Name}'.replace("'", '"') + 
+                        ',\n\t\t' + f'"Description": {Description}'.replace("'", '"') +
+                        ',\n\t\t' + f'"Output": {Output}'.replace("'", '"') +
+                        ',\n\t\t' + f'"Added": {AddedR}'.replace("'", '"') +
+                        '\n\t}' + '\n}')
+                        return out
+                    else:
+                        out = ('{'+'"Facts": \n\t{\n\t\t' + f'"Id": {id}' + ',\n\t\t'+
+                        f'"Type" : {Type}'.replace("'", '"') + ',\n\t\t' + f'"Action": {Action}'.replace("'", '"') + 
+                        ',\n\t\t'+ f'"DegreeOfRoastiness": {DegreeOfRoastiness}'.replace("'", '"') +
+                        ',\n\t\t' + f'"AlreadyTurnedOver": {AlreadyTurnedOver}'.replace("'", '"') +
+                        ',\n\t\t' + f'"PartyReady": {PartyReady}'.replace("'", '"') + 
+                        ',\n\t\t' + f'"DoneOnOneSide": {DoneOnOneSide}'.replace("'", '"') + 
+                        ',\n\t\t' + f'"DoneOnBothSides": {DoneOnBothSides}'.replace("'", '"') +
+                        ',\n\t\t' + f'"BothSideReady": {BothSideReady}'.replace("'", '"') +
+                        ',\n\t\t' + f'"Time": {Time}' +
+                        ',\n\t\t' + f'"NumberOfPeople": {NumberOfPeople}'.replace("'", '"') +
+                        ',\n\t\t' + f'"Added": {Added}'.replace("'", '"') + 
+                        '\n\t}' + ',\n\t' + '"Rules" :\n\t{\n\t\t' + f'"Id": "{None}"' +
+                        ',\n\t\t' + f'"Name": "{None}"'.replace("'", '"') + 
+                        ',\n\t\t' + f'"Description": "{None}"'.replace("'", '"') +
+                        ',\n\t\t' + f'"Output": "{None}"'.replace("'", '"') +
+                        ',\n\t\t' + f'"Added": "{None}"'.replace("'", '"') +
+                        '\n\t}' + '\n}')
+                        return out
                 json.write(to_dict())

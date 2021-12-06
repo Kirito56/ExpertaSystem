@@ -86,7 +86,6 @@ class DefFact(KnowledgeEngine):
         Returns:
             Rules.add_new: записує правило в файл з розширенням .json
         """
-        rules = self.get_rules()
         if 'Іра' in NumberOfPeople:
             output = 'Іра найдена'
             name = 'Правило 3'

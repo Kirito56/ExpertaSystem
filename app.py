@@ -150,6 +150,7 @@ def start(engine: int,
                 NumberOfPeople=NumberOfPeople
             )
             MKebab.upd_by_id(num, data)
+            Kebab.to_json(MKebab, MRules)
         elif modify and numoffact and rules:
             num = int(input('Виберіть факт щоб змінити на випадкове значення: '))
             import random
