@@ -103,7 +103,7 @@ class Kebab(Fact):
                     ',\n\t\t' + f'"Time": {Time}' +
                     ',\n\t\t' + f'"NumberOfPeople": {NumberOfPeople}'.replace("'", '"') +
                     ',\n\t\t' + f'"Added": {Added}'.replace("'", '"') + 
-                    '\n\t}' + ',\n' + '"Rules" :\n\t{\n\t\t' + f'"Id": {RuleId}' +
+                    '\n\t}' + ',\n\t' + '"Rules" :\n\t{\n\t\t' + f'"Id": {RuleId}' +
                     ',\n\t\t' + f'"Name": {Name}'.replace("'", '"') + 
                     ',\n\t\t' + f'"Description": {Description}'.replace("'", '"') +
                     ',\n\t\t' + f'"Output": {Output}'.replace("'", '"') +
@@ -175,7 +175,7 @@ class Kebab(Fact):
                     ',\n\t\t' + f'"Time": {Time}' +
                     ',\n\t\t' + f'"NumberOfPeople": {NumberOfPeople}'.replace("'", '"') +
                     ',\n\t\t' + f'"Added": {Added}'.replace("'", '"') + 
-                    '\n\t}' + ',\n' + '"Rules" :\n\t{\n\t\t' + f'"Id": {RuleId}' +
+                    '\n\t}' + ',\n\t' + '"Rules" :\n\t{\n\t\t' + f'"Id": {RuleId}' +
                     ',\n\t\t' + f'"Name": {Name}'.replace("'", '"') + 
                     ',\n\t\t' + f'"Description": {Description}'.replace("'", '"') +
                     ',\n\t\t' + f'"Output": {Output}'.replace("'", '"') +
