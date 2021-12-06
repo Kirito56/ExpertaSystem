@@ -90,7 +90,7 @@ class Kebab(Fact):
                         RuleId.append(o.RuleId)
                         Name.append(o.Name)
                         Description.append(o.Description)
-                        Output.append('>>'+o.Output)
+                        Output.append('>>'+ o.Output)
                         AddedR.append(time_to_str(o.Added))
                     out = ('{'+'"Facts": \n\t{\n\t\t' + f'"Id": {id}' + ',\n\t\t'+
                     f'"Type" : {Type}'.replace("'", '"') + ',\n\t\t' + f'"Action": {Action}'.replace("'", '"') + 
@@ -162,7 +162,9 @@ class Kebab(Fact):
                         RuleId.append(o.RuleId)
                         Name.append(o.Name)
                         Description.append(o.Description)
-                        Output.append('>>'+o.Output)
+                        # Outputs = o.Output.replace('frozenlist([', '')
+                        # Outputs = Outputs.replace('])', '')
+                        Output.append('>>'+ o.Output)
                         AddedR.append(time_to_str(o.Added))
                     out = ('{'+'"Facts": \n\t{\n\t\t' + f'"Id": {id}' + ',\n\t\t'+
                     f'"Type" : {Type}'.replace("'", '"') + ',\n\t\t' + f'"Action": {Action}'.replace("'", '"') + 

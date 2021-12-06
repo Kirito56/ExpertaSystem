@@ -118,7 +118,9 @@ class DefFact(KnowledgeEngine):
         Returns:
             Rules.add_new: записує правило в файл з розширенням .json
         """
-        output = f"{NumberOfPeople} has no kebab with Pork"
+        output = f"{NumberOfPeople[0]}, {NumberOfPeople[1]}, {NumberOfPeople[2]} has no kebab with Pork".replace('frozenlist([', '')
+        output = output.replace('])', '')
+        # output = output.replace('"', '')
         name = "Правило 5"
         description = 'Шукає факт де Тип не Свинина і Виводить людей'
         return Rules.add_new(RuleId=5, Name=name, Description=description, Output=output)

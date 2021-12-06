@@ -4,6 +4,4 @@ channels:
 dependencies:
   - python=3.8.12
   - sqlalchemy
-  - pymongo
-  - dnspython
   - certifi
