@@ -216,9 +216,6 @@ if __name__ == "__main__":
     if delete or modify or clear or rules:
         numoffact = True
         start(engine, modify=modify, numoffact=numoffact, delfacts=delete, clear=clear, rules=rules)
-    kebab = MKebab.get_list()
-    MKebab.to_dict_list(kebab)
-    rules = MRules.get_list()
-    Kebab.to_json(MKebab.to_dict_list(kebab), MRules.to_dict_list(rules))
+    Kebab.to_json(MKebab, MRules)
     
     

@@ -38,25 +38,15 @@ class DefFact(KnowledgeEngine):
             DoneAToTheMajority = random.choice([True, False])
             NumberOfPeople = random.choice([["Іра", "Яна", "Влада"],
                                             ["Володя", "Женя", "Влад"], ["Ярослав", "Вадім", "Олесь"]])
-            yield Kebab(Type=Type,
+            yield Kebab(id=i, Type=Type,
                         Action=Action, DegreeOfRoastiness=DegreeOfRoastiness,
                         AlreadyTurnedOver=AlreadyTurnedOver, PartyReady=PartyReady,
                         DoneOnOneSide=DoneOnOneSide, DoneOnBothSides=DoneOnBothSides,
                         BothSideReady=BothSideReady, Time=Time,
                         DoneAToTheMajority=DoneAToTheMajority,
                         NumberOfPeople=NumberOfPeople)
-            new_show = dict(
-                Type=Type,
-                Action=Action, DegreeOfRoastiness=DegreeOfRoastiness,
-                AlreadyTurnedOver=AlreadyTurnedOver, PartyReady=PartyReady,
-                DoneOnOneSide=DoneOnOneSide, DoneOnBothSides=DoneOnBothSides,
-                BothSideReady=BothSideReady, Time=Time,
-                DoneAToTheMajority=DoneAToTheMajority,
-                NumberOfPeople=NumberOfPeople,
-                added=time.utcnow()
-            )
             MKebab.add_new(Type, Action, DegreeOfRoastiness, AlreadyTurnedOver, PartyReady, DoneOnOneSide,
-                           DoneOnBothSides, BothSideReady, Time, DoneAToTheMajority, NumberOfPeople, new_show)
+                           DoneOnBothSides, BothSideReady, Time, DoneAToTheMajority, NumberOfPeople)
             i += 1
 
     @Rule(Kebab(Type='Свинина', Time=15, Action='Чекати'))
@@ -67,6 +57,7 @@ class DefFact(KnowledgeEngine):
             Rules.add_new: записує правило в файл з розширенням .json
         """
         self.facts.retract(0)
+        self.get_rules()
         output = 'Знайдено'
         name = 'Правило 1'
         description = 'Шукає факт де вказано:\nТип = Свинина,\nЧас = 15,\nДія = Чекати'
@@ -81,6 +72,7 @@ class DefFact(KnowledgeEngine):
         """
         output = 'Found'
         name = 'Правило 2'
+        self.get_rules()
         description = 'Шукає факт де вказанo:\nTип = Свинина,\nЧас = 0,\nДія = перевернути,\nВже перевертали = Так'
         return Rules.add_new(RuleId=2, Name=name, Description=description, Output=output)
 
@@ -94,6 +86,7 @@ class DefFact(KnowledgeEngine):
         Returns:
             Rules.add_new: записує правило в файл з розширенням .json
         """
+        rules = self.get_rules()
         if 'Іра' in NumberOfPeople:
             output = 'Іра найдена'
             name = 'Правило 3'
@@ -110,9 +103,9 @@ class DefFact(KnowledgeEngine):
         Returns:
             Rules.add_new: записує правило в файл з розширенням .json
         """
-        output = f'Час < 15: {Time}'
-        name = 'Правило 4'
-        description = 'Шукає факт де час меньше як зазначено в функції TEST'
+        output = f"Час < 15: {Time}"
+        name = "Правило 4"
+        description = "Шукає факт де час меньше як зазначено в функції TEST"
         return Rules.add_new(RuleId=4, Name=name, Description=description, Output=output)
 
     @Rule(Kebab(Type=~L('Свинина'), NumberOfPeople=MATCH.NumberOfPeople))
@@ -125,8 +118,8 @@ class DefFact(KnowledgeEngine):
         Returns:
             Rules.add_new: записує правило в файл з розширенням .json
         """
-        output = f'{NumberOfPeople} has no kebab with Pork'
-        name = 'Правило 5'
+        output = f"{NumberOfPeople} has no kebab with Pork"
+        name = "Правило 5"
         description = 'Шукає факт де Тип не Свинина і Виводить людей'
         return Rules.add_new(RuleId=5, Name=name, Description=description, Output=output)
 

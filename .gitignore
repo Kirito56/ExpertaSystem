@@ -5,3 +5,4 @@ test.py
 ES/
 .ipynb_checkpoints
 ES.db
+outputs.json

@@ -11,7 +11,7 @@ Session = sessionmaker()
 Session.configure(bind=db)
 session = Session()
 
-__version__ = '0.9'
+__version__ = '1.0'
 
 class Kebab(Model):
     __tablename__ = 'Experta'
@@ -62,7 +62,7 @@ class Kebab(Model):
         return result
 
     @staticmethod
-    def to_dict_list(object):
+    def to_dict_list(object: object):
         result = list()
         for o in object:
             row = dict()
@@ -74,7 +74,7 @@ class Kebab(Model):
     @staticmethod
     def add_new(Type, Action, DegreeOfRoasting,
                 AlreadyTurnedOver, PartyReady, DoneOnOneSide, DoneOnBothSides,
-                BothSideReady, Time, DoneAToTheMajority, NumberOfPeople, data):
+                BothSideReady, Time, DoneAToTheMajority, NumberOfPeople):
         es = Kebab(
             Type=Type,
             Action=Action,
