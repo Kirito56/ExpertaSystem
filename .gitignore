@@ -6,3 +6,5 @@ ES/
 .ipynb_checkpoints
 ES.db
 outputs.json
+venv/
+env/
